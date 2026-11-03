@@ -1,0 +1,52 @@
+/* TOKENS: every color, spacing and size lives here as a CSS variable.
+   Change a value once and the whole app updates. Dark mode = new values for the same names. */
+:root {
+  /* colors */
+  --color-bg: #eef2f7;
+  --color-surface: #ffffff;
+  --color-text: #14213d;
+  --color-muted: #5b677a;
+  --color-line: #dbe2ec;
+  --color-brand: #0b6e8a;
+  --color-brand-soft: #e1f1f6;   /* light tint of the brand, for active/selected backgrounds */
+  --color-on-brand: #ffffff;
+  --color-warn: #b45309;
+  --color-danger: #b42318;
+  --hero-from: #0b6e8a;          /* gradient of the highlighted progress card */
+  --hero-to: #0e87a3;
+
+  /* spacing scale */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+
+  /* shape, shadow, type */
+  --radius: 16px;
+  --radius-sm: 10px;
+  --shadow: 0 1px 2px rgba(20, 33, 61, .06), 0 6px 18px rgba(20, 33, 61, .06);
+  --font: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+  /* layout sizes */
+  --tabbar-height: 64px;
+  --sidebar-width: 230px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: #0d1520;
+    --color-surface: #152130;
+    --color-text: #e6edf5;
+    --color-muted: #93a1b5;
+    --color-line: #25354a;
+    --color-brand: #38bdf8;
+    --color-brand-soft: #123244;
+    --color-on-brand: #04222c;
+    --color-warn: #fbbf24;
+    --color-danger: #f87171;
+    --hero-from: #0c4a63;
+    --hero-to: #0b6e8a;
+    --shadow: 0 1px 2px rgba(0, 0, 0, .4);
+  }
+}

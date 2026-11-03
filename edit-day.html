@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0b6e8a">
+  <title>Edit day - OJT Tracker</title>
+
+  <!-- CSS is split by purpose. Order matters: tokens > base > components > screens -->
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/screens.css">
+</head>
+
+<!--
+  THIS PAGE - Edit one day. Opened from history.html. Counts as part of History.
+  Every page has the same 2 parts: the screen content and the menu.
+  The menu is repeated in each file; the link for this page has aria-current="page".
+  If you add or rename a menu item, update the menu in ALL the pages.
+-->
+<body>
+<div class="app">
+
+  <section class="screen" id="edit-day">
+    <header class="screen-header">
+      <a class="back-link" href="history.html">&lsaquo; Back</a>
+      <h1 class="screen-title">Edit day</h1>
+    </header>
+
+    <form class="stack">
+      <!-- Exact date, weekday and hours worked -->
+      <article class="card day-summary">
+        <p class="day-summary-weekday">Tuesday</p>
+        <p class="day-summary-date">November 3, 2026</p>
+        <p class="day-summary-hours">8h 05m</p>
+        <p class="day-summary-label">worked</p>
+      </article>
+
+      <section class="card session">
+        <h2 class="session-title">Morning</h2>
+        <div class="session-times">
+          <div class="time-field">
+            <label class="field-label" for="edit-am-in">Time in</label>
+            <input class="field" type="time" id="edit-am-in" value="08:00">
+          </div>
+          <div class="time-field">
+            <label class="field-label" for="edit-am-out">Time out</label>
+            <input class="field" type="time" id="edit-am-out" value="12:00">
+          </div>
+        </div>
+      </section>
+
+      <section class="card session">
+        <h2 class="session-title">Afternoon</h2>
+        <div class="session-times">
+          <div class="time-field">
+            <label class="field-label" for="edit-pm-in">Time in</label>
+            <input class="field" type="time" id="edit-pm-in" value="13:00">
+          </div>
+          <div class="time-field">
+            <label class="field-label" for="edit-pm-out">Time out</label>
+            <input class="field" type="time" id="edit-pm-out" value="17:05">
+          </div>
+        </div>
+      </section>
+
+      <div class="form-group">
+        <label class="field-label" for="edit-notes">Note</label>
+        <textarea class="field" id="edit-notes" rows="4">Set up the dev environment and met the team.</textarea>
+      </div>
+
+      <button class="btn btn-primary btn-block" type="submit">Save changes</button>
+    </form>
+  </section>
+
+
+  
+
+
+  <!-- ============ MENU: bottom bar on phones, left sidebar on tablets/desktops (always visible) ============ -->
+  <nav class="tabbar" aria-label="Main menu">
+    <p class="tabbar-brand">OJT Tracker</p>
+    <a class="tab" href="index.html">
+      <svg class="tab-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-8 9 8M5 10v10h5v-6h4v6h5V10"/></svg>
+      <span class="tab-label">Home</span>
+    </a>
+    <a class="tab" href="history.html" aria-current="page">
+      <svg class="tab-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+      <span class="tab-label">History</span>
+    </a>
+    <a class="tab" href="settings.html">
+      <svg class="tab-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/></svg>
+      <span class="tab-label">Settings</span>
+    </a>
+  </nav>
+
+</div>
+</body>
+</html>

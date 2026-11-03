@@ -1,0 +1,32 @@
+/* BASE: resets and page-level styles. No components here. */
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: var(--font);
+  font-size: 1rem;
+  line-height: 1.45;
+  color: var(--color-text);
+  background: var(--color-bg);
+  -webkit-text-size-adjust: 100%;
+}
+
+h1, h2, p { margin: 0; }
+a { color: inherit; text-decoration: none; }
+button, input, textarea { font: inherit; color: inherit; }
+fieldset { margin: 0; padding: 0; border: 0; min-width: 0; }
+:focus-visible { outline: 2px solid var(--color-brand); outline-offset: 2px; }
+
+.app { min-height: 100vh; min-height: 100dvh; }
+
+/* Helper: hide something visually but keep it for screen readers */
+.visually-hidden {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap;
+}
+
+/* Helper: vertical spacing between children */
+.stack { display: grid; gap: var(--space-3); }
+
+/* Respect people who turn animations off in their phone settings */
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; } }

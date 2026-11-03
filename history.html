@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0b6e8a">
+  <title>History - OJT Tracker</title>
+
+  <!-- CSS is split by purpose. Order matters: tokens > base > components > screens -->
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/screens.css">
+</head>
+
+<!--
+  THIS PAGE - History: list of logged days. Each row opens edit-day.html.
+  Every page has the same 2 parts: the screen content and the menu.
+  The menu is repeated in each file; the link for this page has aria-current="page".
+  If you add or rename a menu item, update the menu in ALL the pages.
+-->
+<body>
+<div class="app">
+
+  <section class="screen" id="history">
+    <header class="screen-header">
+      <h1 class="screen-title">History</h1>
+    </header>
+
+    <!-- One link per logged day. Tapping opens the edit screen. -->
+    <div class="stack">
+      <a class="day-item" href="edit-day.html">
+        <div class="day-date"><span class="day-number">3</span><span class="day-month">Nov</span></div>
+        <div class="day-info">
+          <p class="day-weekday">Tuesday <span class="tag tag-late">Late</span></p>
+          <p class="day-note">Set up the dev environment and met the team.</p>
+        </div>
+        <p class="day-hours">8h 05m</p>
+      </a>
+
+      <a class="day-item" href="edit-day.html">
+        <div class="day-date"><span class="day-number">2</span><span class="day-month">Nov</span></div>
+        <div class="day-info">
+          <p class="day-weekday">Monday</p>
+          <p class="day-note">Orientation and company policies.</p>
+        </div>
+        <p class="day-hours">8h 00m</p>
+      </a>
+
+      <a class="day-item" href="edit-day.html">
+        <div class="day-date"><span class="day-number">30</span><span class="day-month">Oct</span></div>
+        <div class="day-info">
+          <p class="day-weekday">Friday <span class="tag tag-over">Overtime</span></p>
+          <p class="day-note">Fixed bugs on the login page.</p>
+        </div>
+        <p class="day-hours">9h 30m</p>
+      </a>
+
+      <a class="day-item" href="edit-day.html">
+        <div class="day-date"><span class="day-number">29</span><span class="day-month">Oct</span></div>
+        <div class="day-info">
+          <p class="day-weekday">Thursday</p>
+          <p class="day-note">No notes</p>
+        </div>
+        <p class="day-hours">7h 45m</p>
+      </a>
+    </div>
+  </section>
+
+
+  
+
+
+  <!-- ============ MENU: bottom bar on phones, left sidebar on tablets/desktops (always visible) ============ -->
+  <nav class="tabbar" aria-label="Main menu">
+    <p class="tabbar-brand">OJT Tracker</p>
+    <a class="tab" href="index.html">
+      <svg class="tab-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-8 9 8M5 10v10h5v-6h4v6h5V10"/></svg>
+      <span class="tab-label">Home</span>
+    </a>
+    <a class="tab" href="history.html" aria-current="page">
+      <svg class="tab-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+      <span class="tab-label">History</span>
+    </a>
+    <a class="tab" href="settings.html">
+      <svg class="tab-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/></svg>
+      <span class="tab-label">Settings</span>
+    </a>
+  </nav>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0b6e8a">
+  <title>Settings - OJT Tracker</title>
+
+  <!-- CSS is split by purpose. Order matters: tokens > base > components > screens -->
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/screens.css">
+</head>
+
+<!--
+  THIS PAGE - Settings: OJT details, work schedule, reminders.
+  Every page has the same 2 parts: the screen content and the menu.
+  The menu is repeated in each file; the link for this page has aria-current="page".
+  If you add or rename a menu item, update the menu in ALL the pages.
+-->
+<body>
+<div class="app">
+
+  <section class="screen" id="settings">
+    <header class="screen-header">
+      <h1 class="screen-title">Settings</h1>
+    </header>
+
+    <form class="stack">
+      <section class="card">
+        <h2 class="card-title">OJT details</h2>
+        <div class="form-group">
+          <label class="field-label" for="required-hours">Required hours</label>
+          <input class="field" type="number" id="required-hours" min="1" value="240">
+        </div>
+        <div class="form-group">
+          <label class="field-label" for="company-name">Company name</label>
+          <input class="field" type="text" id="company-name" placeholder="Your company">
+        </div>
+      </section>
+
+      <section class="card">
+        <h2 class="card-title">Work schedule</h2>
+        <div class="form-group">
+          <label class="field-label" for="official-time-in">Official time in</label>
+          <input class="field" type="time" id="official-time-in" value="08:00">
+        </div>
+        <div class="form-group">
+          <label class="field-label" for="hours-per-day">Hours per day</label>
+          <input class="field" type="number" id="hours-per-day" min="1" max="24" value="8">
+        </div>
+        <div class="form-group">
+          <label class="field-label" for="days-per-week">Days per week</label>
+          <input class="field" type="number" id="days-per-week" min="1" max="7" value="5">
+        </div>
+      </section>
+
+      <section class="card">
+        <h2 class="card-title">Reminders</h2>
+        <div class="reminder">
+          <label class="switch">
+            <input type="checkbox" checked>
+            <span class="switch-track"></span>
+            <span class="switch-text">Time in</span>
+          </label>
+          <input class="field" type="time" aria-label="Time in reminder time" value="07:45">
+        </div>
+        <div class="reminder">
+          <label class="switch">
+            <input type="checkbox">
+            <span class="switch-track"></span>
+            <span class="switch-text">Time out</span>
+          </label>
+          <input class="field" type="time" aria-label="Time out reminder time" value="17:00">
+        </div>
+      </section>
+
+      <button class="btn btn-primary btn-block" type="submit">Save settings</button>
+    </form>
+  </section>
+
+
+  
+
+
+  <!-- ============ MENU: bottom bar on phones, left sidebar on tablets/desktops (always visible) ============ -->
+  <nav class="tabbar" aria-label="Main menu">
+    <p class="tabbar-brand">OJT Tracker</p>
+    <a class="tab" href="index.html">
+      <svg class="tab-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-8 9 8M5 10v10h5v-6h4v6h5V10"/></svg>
+      <span class="tab-label">Home</span>
+    </a>
+    <a class="tab" href="history.html">
+      <svg class="tab-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+      <span class="tab-label">History</span>
+    </a>
+    <a class="tab" href="settings.html" aria-current="page">
+      <svg class="tab-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/></svg>
+      <span class="tab-label">Settings</span>
+    </a>
+  </nav>
+
+</div>
+</body>
+</html>
