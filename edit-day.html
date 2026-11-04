@@ -31,43 +31,57 @@
     <form class="stack">
       <!-- Exact date, weekday and hours worked -->
       <article class="card day-summary">
-        <p class="day-summary-weekday">Tuesday</p>
-        <p class="day-summary-date">November 3, 2026</p>
-        <p class="day-summary-hours">8h 05m</p>
+        <p class="day-summary-weekday" data-bind="weekday"></p>
+        <p class="day-summary-date" data-bind="date"></p>
+        <p class="day-summary-hours" data-bind="hours"></p>
         <p class="day-summary-label">worked</p>
       </article>
 
-      <section class="card session">
+      <section class="card session" data-mode-only="split">
         <h2 class="session-title">Morning</h2>
         <div class="session-times">
           <div class="time-field">
             <label class="field-label" for="edit-am-in">Time in</label>
-            <input class="field" type="time" id="edit-am-in" value="08:00">
+            <input class="field" type="time" id="edit-am-in">
           </div>
           <div class="time-field">
             <label class="field-label" for="edit-am-out">Time out</label>
-            <input class="field" type="time" id="edit-am-out" value="12:00">
+            <input class="field" type="time" id="edit-am-out">
           </div>
         </div>
       </section>
 
-      <section class="card session">
+      <section class="card session" data-mode-only="split">
         <h2 class="session-title">Afternoon</h2>
         <div class="session-times">
           <div class="time-field">
             <label class="field-label" for="edit-pm-in">Time in</label>
-            <input class="field" type="time" id="edit-pm-in" value="13:00">
+            <input class="field" type="time" id="edit-pm-in">
           </div>
           <div class="time-field">
             <label class="field-label" for="edit-pm-out">Time out</label>
-            <input class="field" type="time" id="edit-pm-out" value="17:05">
+            <input class="field" type="time" id="edit-pm-out">
+          </div>
+        </div>
+      </section>
+
+      <section class="card session" data-mode-only="whole" hidden>
+        <h2 class="session-title">Whole day</h2>
+        <div class="session-times">
+          <div class="time-field">
+            <label class="field-label" for="edit-day-in">Time in</label>
+            <input class="field" type="time" id="edit-day-in">
+          </div>
+          <div class="time-field">
+            <label class="field-label" for="edit-day-out">Time out</label>
+            <input class="field" type="time" id="edit-day-out">
           </div>
         </div>
       </section>
 
       <div class="form-group">
         <label class="field-label" for="edit-notes">Note</label>
-        <textarea class="field" id="edit-notes" rows="4">Set up the dev environment and met the team.</textarea>
+        <textarea class="field" id="edit-notes" rows="4"></textarea>
       </div>
 
       <button class="btn btn-primary btn-block" type="submit">Save changes</button>
@@ -96,5 +110,6 @@
   </nav>
 
 </div>
+<script type="module" src="js/pages/edit-day.js"></script>
 </body>
 </html>

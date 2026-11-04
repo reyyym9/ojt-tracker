@@ -60,20 +60,21 @@
         <h2 class="card-title">Reminders</h2>
         <div class="reminder">
           <label class="switch">
-            <input type="checkbox" checked>
+            <input type="checkbox" id="remind-in-on" checked>
             <span class="switch-track"></span>
             <span class="switch-text">Time in</span>
           </label>
-          <input class="field" type="time" aria-label="Time in reminder time" value="07:45">
+          <input class="field" type="time" id="remind-in-time" aria-label="Time in reminder time" value="07:45">
         </div>
         <div class="reminder">
           <label class="switch">
-            <input type="checkbox">
+            <input type="checkbox" id="remind-out-on">
             <span class="switch-track"></span>
             <span class="switch-text">Time out</span>
           </label>
-          <input class="field" type="time" aria-label="Time out reminder time" value="17:00">
+          <input class="field" type="time" id="remind-out-time" aria-label="Time out reminder time" value="17:00">
         </div>
+        <p class="card-note">Reminders are saved now. They will ring on your phone once the app is built for Android.</p>
       </section>
 
       <button class="btn btn-primary btn-block" type="submit">Save settings</button>
@@ -102,5 +103,6 @@
   </nav>
 
 </div>
+<script type="module" src="js/pages/settings.js"></script>
 </body>
 </html>

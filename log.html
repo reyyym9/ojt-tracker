@@ -27,7 +27,7 @@
       <a class="back-link" href="index.html">&lsaquo; Back</a>
       <div>
         <h1 class="screen-title">Log today</h1>
-        <p class="screen-subtitle">Tuesday, November 3, 2026</p>
+        <p class="screen-subtitle" data-bind="today"></p>
       </div>
     </header>
 
@@ -48,13 +48,13 @@
           <div class="session-times">
             <div class="time-field">
               <label class="field-label" for="am-in">Time in</label>
-              <input class="field" type="time" id="am-in" value="08:00">
-              <button class="btn btn-small" type="button">Use current time</button>
+              <input class="field" type="time" id="am-in">
+              <button class="btn btn-small" type="button" data-now="am-in">Use current time</button>
             </div>
             <div class="time-field">
               <label class="field-label" for="am-out">Time out</label>
-              <input class="field" type="time" id="am-out" value="12:00">
-              <button class="btn btn-small" type="button">Use current time</button>
+              <input class="field" type="time" id="am-out">
+              <button class="btn btn-small" type="button" data-now="am-out">Use current time</button>
             </div>
           </div>
         </section>
@@ -64,13 +64,13 @@
           <div class="session-times">
             <div class="time-field">
               <label class="field-label" for="pm-in">Time in</label>
-              <input class="field" type="time" id="pm-in" value="13:00">
-              <button class="btn btn-small" type="button">Use current time</button>
+              <input class="field" type="time" id="pm-in">
+              <button class="btn btn-small" type="button" data-now="pm-in">Use current time</button>
             </div>
             <div class="time-field">
               <label class="field-label" for="pm-out">Time out</label>
-              <input class="field" type="time" id="pm-out" value="17:05">
-              <button class="btn btn-small" type="button">Use current time</button>
+              <input class="field" type="time" id="pm-out">
+              <button class="btn btn-small" type="button" data-now="pm-out">Use current time</button>
             </div>
           </div>
         </section>
@@ -83,13 +83,13 @@
           <div class="session-times">
             <div class="time-field">
               <label class="field-label" for="day-in">Time in</label>
-              <input class="field" type="time" id="day-in" value="08:00">
-              <button class="btn btn-small" type="button">Use current time</button>
+              <input class="field" type="time" id="day-in">
+              <button class="btn btn-small" type="button" data-now="day-in">Use current time</button>
             </div>
             <div class="time-field">
               <label class="field-label" for="day-out">Time out</label>
-              <input class="field" type="time" id="day-out" value="17:00">
-              <button class="btn btn-small" type="button">Use current time</button>
+              <input class="field" type="time" id="day-out">
+              <button class="btn btn-small" type="button" data-now="day-out">Use current time</button>
             </div>
           </div>
         </section>
@@ -103,10 +103,10 @@
 
       <button class="btn btn-primary btn-block" type="submit">Submit</button>
 
-      <!-- Result: later, JavaScript will show this only after Submit -->
-      <div class="card result">
+      <!-- Result: hidden until Submit (log.js shows it) -->
+      <div class="card result" hidden>
         <p class="result-label">Total hours today</p>
-        <p class="result-value">8h 05m</p>
+        <p class="result-value" data-bind="total"></p>
       </div>
     </form>
   </section>
@@ -133,5 +133,6 @@
   </nav>
 
 </div>
+<script type="module" src="js/pages/log.js"></script>
 </body>
 </html>

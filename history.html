@@ -27,44 +27,8 @@
       <h1 class="screen-title">History</h1>
     </header>
 
-    <!-- One link per logged day. Tapping opens the edit screen. -->
-    <div class="stack">
-      <a class="day-item" href="edit-day.html">
-        <div class="day-date"><span class="day-number">3</span><span class="day-month">Nov</span></div>
-        <div class="day-info">
-          <p class="day-weekday">Tuesday <span class="tag tag-late">Late</span></p>
-          <p class="day-note">Set up the dev environment and met the team.</p>
-        </div>
-        <p class="day-hours">8h 05m</p>
-      </a>
-
-      <a class="day-item" href="edit-day.html">
-        <div class="day-date"><span class="day-number">2</span><span class="day-month">Nov</span></div>
-        <div class="day-info">
-          <p class="day-weekday">Monday</p>
-          <p class="day-note">Orientation and company policies.</p>
-        </div>
-        <p class="day-hours">8h 00m</p>
-      </a>
-
-      <a class="day-item" href="edit-day.html">
-        <div class="day-date"><span class="day-number">30</span><span class="day-month">Oct</span></div>
-        <div class="day-info">
-          <p class="day-weekday">Friday <span class="tag tag-over">Overtime</span></p>
-          <p class="day-note">Fixed bugs on the login page.</p>
-        </div>
-        <p class="day-hours">9h 30m</p>
-      </a>
-
-      <a class="day-item" href="edit-day.html">
-        <div class="day-date"><span class="day-number">29</span><span class="day-month">Oct</span></div>
-        <div class="day-info">
-          <p class="day-weekday">Thursday</p>
-          <p class="day-note">No notes</p>
-        </div>
-        <p class="day-hours">7h 45m</p>
-      </a>
-    </div>
+    <!-- history.js fills this list: one link per logged day, opening edit-day.html?date=... -->
+    <div class="stack" data-bind="list"></div>
   </section>
 
 
@@ -89,5 +53,6 @@
   </nav>
 
 </div>
+<script type="module" src="js/pages/history.js"></script>
 </body>
 </html>
