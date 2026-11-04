@@ -54,17 +54,20 @@ textarea.field { resize: vertical; }
 .chart-col { position: relative; flex: 1; display: flex; align-items: flex-end; justify-content: center; height: 100%; }
 .chart-bar { width: 62%; max-width: 44px; height: var(--h); background: var(--color-brand); border-radius: 8px 8px 0 0; transition: height .4s; }
 .chart-bar-over { background: var(--color-warn); }
-.chart-value { position: absolute; bottom: calc(var(--h) + 3px); font-size: .7rem; font-weight: 600; color: var(--color-muted); }
+.chart-value { position: absolute; z-index: 2; padding: 0 3px; background: var(--color-surface); border-radius: 4px; bottom: calc(var(--h) + 3px); font-size: .7rem; font-weight: 600; color: var(--color-muted); }
 .chart-target { position: absolute; left: 0; right: 0; bottom: var(--target); z-index: 1; border-top: 2px dashed var(--color-muted); opacity: .7; }
 .chart-axis { display: flex; gap: var(--space-2); margin-top: var(--space-2); }
 .chart-axis span { flex: 1; text-align: center; font-size: .75rem; color: var(--color-muted); }
 
 /* ---- segmented control (radio buttons that look like a toggle) ---- */
-.segmented { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-1); padding: var(--space-1); background: var(--color-surface); border: 1px solid var(--color-line); border-radius: var(--radius-sm); }
+.segmented { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: var(--space-1); padding: var(--space-1); background: var(--color-surface); border: 1px solid var(--color-line); border-radius: var(--radius-sm); }
 .segmented input { position: absolute; opacity: 0; }
 .segmented label { display: grid; place-items: center; min-height: 44px; padding: var(--space-2); text-align: center; font-size: .9rem; border-radius: 8px; cursor: pointer; transition: background .2s; }
 .segmented input:checked + label { color: var(--color-on-brand); background: var(--color-brand); font-weight: 600; }
 .segmented input:focus-visible + label { outline: 2px solid var(--color-brand); outline-offset: 2px; }
+
+/* ---- button-row (buttons side by side) ---- */
+.button-row { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-top: var(--space-3); }
 
 /* ---- session (a time in / time out pair) ---- */
 .session-title { margin-bottom: var(--space-3); font-size: 1.05rem; }

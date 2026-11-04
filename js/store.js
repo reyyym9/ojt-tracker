@@ -12,14 +12,18 @@ const defaults = () => ({
   days: {},
 });
 
-let db = defaults();
-try {
-  const saved = JSON.parse(localStorage.getItem(KEY));
-  if (saved) {
-    const base = defaults().settings;
-    db = { settings: { ...base, ...saved.settings, remind: { ...base.remind, ...(saved.settings || {}).remind } }, days: saved.days || {} };
+// Turns saved or imported data into a complete, safe object (fills in anything missing)
+function normalize(saved) {
+  const base = defaults().settings, s = (saved && saved.settings) || {};
+  const days = {};
+  for (const [key, d] of Object.entries((saved && saved.days) || {})) {
+    days[key] = { mode: d.mode === 'whole' ? 'whole' : 'split', am: { ...d.am }, pm: { ...d.pm }, log: String(d.log || '') };
   }
-} catch (e) { /* first run or unreadable data: keep the defaults */ }
+  return { settings: { ...base, ...s, remind: { ...base.remind, ...s.remind } }, days };
+}
+
+let db = defaults();
+try { db = normalize(JSON.parse(localStorage.getItem(KEY))); } catch (e) { /* first run or unreadable data */ }
 
 const persist = () => { try { localStorage.setItem(KEY, JSON.stringify(db)); } catch (e) { alert('Could not save your data.'); } };
 
@@ -28,3 +32,12 @@ export const saveSettings = settings => { db.settings = settings; persist(); };
 export const allDays = () => db.days;
 export const getDay = key => db.days[key] || { mode: 'split', am: {}, pm: {}, log: '' }; // blank day if none saved
 export const saveDay = (key, day) => { db.days[key] = day; persist(); };
+
+// Backup: everything as one JSON text, and the way back
+export const exportJSON = () => JSON.stringify(db, null, 1);
+export function importJSON(text) {
+  const data = JSON.parse(text);
+  if (!data || typeof data.days !== 'object') throw new Error('Not an OJT backup');
+  db = normalize(data);
+  persist();
+}

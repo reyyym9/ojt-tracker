@@ -1,6 +1,8 @@
 /* TOKENS: every color, spacing and size lives here as a CSS variable.
    Change a value once and the whole app updates. Dark mode = new values for the same names. */
 :root {
+  color-scheme: light; /* makes time pickers, scrollbars etc. match the theme */
+
   /* colors */
   --color-bg: #eef2f7;
   --color-surface: #ffffff;
@@ -33,20 +35,20 @@
   --sidebar-width: 230px;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color-bg: #0d1520;
-    --color-surface: #152130;
-    --color-text: #e6edf5;
-    --color-muted: #93a1b5;
-    --color-line: #25354a;
-    --color-brand: #38bdf8;
-    --color-brand-soft: #123244;
-    --color-on-brand: #04222c;
-    --color-warn: #fbbf24;
-    --color-danger: #f87171;
-    --hero-from: #0c4a63;
-    --hero-to: #0b6e8a;
-    --shadow: 0 1px 2px rgba(0, 0, 0, .4);
-  }
+/* Dark theme: js/theme-init.js sets <html data-theme="dark"> (from the saved choice or the phone setting) */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --color-bg: #0d1520;
+  --color-surface: #152130;
+  --color-text: #e6edf5;
+  --color-muted: #93a1b5;
+  --color-line: #25354a;
+  --color-brand: #38bdf8;
+  --color-brand-soft: #123244;
+  --color-on-brand: #04222c;
+  --color-warn: #fbbf24;
+  --color-danger: #f87171;
+  --hero-from: #0c4a63;
+  --hero-to: #0b6e8a;
+  --shadow: 0 1px 2px rgba(0, 0, 0, .4);
 }
