@@ -42,6 +42,13 @@ export function finishDate(leftMin, settings) {
   return keyOf(d);
 }
 
+// The three notes every day needs for the weekly narrative report: [field name, label]
+export const NOTES = [
+  ['tasks', 'Tasks done'],
+  ['challenges', 'Challenges encountered'],
+  ['solutions', 'How I overcame these challenges'],
+];
+
 // Returns an error message, or '' when the day is fine to save
 export function validate(day) {
   const slots = day.mode === 'whole' ? [['Whole day', day.am]] : [['Morning', day.am], ['Afternoon', day.pm]];
@@ -52,5 +59,9 @@ export function validate(day) {
     if (!slot.in || !slot.out) return `${name}: fill in both time in and time out.`;
     if (toMin(slot.out) <= toMin(slot.in)) return `${name}: time out must be after time in.`;
   }
-  return hasTimes || day.log.trim() ? '' : 'Enter at least one time in and time out.';
+  if (!hasTimes) return 'Enter at least one time in and time out.';
+  for (const [field, label] of NOTES) {
+    if (!String(day[field] || '').trim()) return `${label} is required.`; // spaces only does not count
+  }
+  return '';
 }

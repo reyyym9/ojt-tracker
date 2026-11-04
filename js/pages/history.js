@@ -12,14 +12,14 @@ const row = ([key, day]) => {
       <div class="day-date"><span class="day-number">${parseKey(key).getDate()}</span><span class="day-month">${monthShort(key)}</span></div>
       <div class="day-info">
         <p class="day-weekday">${weekday(key)}${late ? ' <span class="tag tag-late">Late</span>' : ''}${overtime ? ' <span class="tag tag-over">Overtime</span>' : ''}</p>
-        <p class="day-note">${esc(day.log) || 'No notes'}</p>
+        <p class="day-note">${esc(day.tasks) || 'No notes'}</p>
       </div>
       <p class="day-hours">${fmt(dayMin(day))}</p>
     </a>`;
 };
 
 const entries = Object.entries(allDays())
-  .filter(([, day]) => dayMin(day) > 0 || day.log.trim())
+  .filter(([, day]) => dayMin(day) > 0 || day.tasks.trim())
   .sort((a, b) => b[0].localeCompare(a[0])); // newest first ("2026-11-03" sorts correctly as text)
 
 $('[data-bind="list"]').innerHTML = entries.length

@@ -82,12 +82,25 @@
         </div>
       </section>
 
-      <div class="form-group">
-        <label class="field-label" for="edit-notes">Note</label>
-        <textarea class="field" id="edit-notes" rows="4"></textarea>
-      </div>
+      <section class="card">
+        <h2 class="card-title">Daily notes</h2>
+        <p class="card-note">All three are required. They are used for your weekly narrative report.</p>
+        <div class="form-group">
+          <label class="field-label" for="edit-tasks">Tasks done <span class="field-required" aria-hidden="true">*</span></label>
+          <textarea class="field" id="edit-tasks" rows="3" required placeholder="What did you work on today?"></textarea>
+        </div>
+        <div class="form-group">
+          <label class="field-label" for="edit-challenges">Challenges encountered <span class="field-required" aria-hidden="true">*</span></label>
+          <textarea class="field" id="edit-challenges" rows="3" required placeholder="What was difficult or went wrong?"></textarea>
+        </div>
+        <div class="form-group">
+          <label class="field-label" for="edit-solutions">How I overcame these challenges <span class="field-required" aria-hidden="true">*</span></label>
+          <textarea class="field" id="edit-solutions" rows="3" required placeholder="What did you do, or who helped you?"></textarea>
+        </div>
+      </section>
 
       <button class="btn btn-primary btn-block" type="submit">Save changes</button>
+      <button class="btn btn-danger btn-block" type="button" id="delete-btn">Delete this day</button>
     </form>
   </section>
 

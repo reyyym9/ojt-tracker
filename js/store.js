@@ -1,6 +1,6 @@
 // STORE: the app's "backend". Saves everything in the browser/phone with localStorage (works offline).
 //   settings : { required, company, officialIn, hoursPerDay, daysPerWeek, remind:{in:{on,time}, out:{on,time}} }
-//   days     : { "2026-11-03": { mode: "split" | "whole", am:{in,out}, pm:{in,out}, log: "notes" } }
+//   days     : { "2026-11-03": { mode: "split" | "whole", am:{in,out}, pm:{in,out}, tasks, challenges, solutions } }
 //              (in "whole" mode the whole-day times are kept in `am`)
 const KEY = 'ojt-diy-v1';
 
@@ -17,7 +17,11 @@ function normalize(saved) {
   const base = defaults().settings, s = (saved && saved.settings) || {};
   const days = {};
   for (const [key, d] of Object.entries((saved && saved.days) || {})) {
-    days[key] = { mode: d.mode === 'whole' ? 'whole' : 'split', am: { ...d.am }, pm: { ...d.pm }, log: String(d.log || '') };
+    // Old entries had one note called `log`; it becomes the "tasks" note
+    days[key] = {
+      mode: d.mode === 'whole' ? 'whole' : 'split', am: { ...d.am }, pm: { ...d.pm },
+      tasks: String(d.tasks ?? d.log ?? ''), challenges: String(d.challenges || ''), solutions: String(d.solutions || ''),
+    };
   }
   return { settings: { ...base, ...s, remind: { ...base.remind, ...s.remind } }, days };
 }
@@ -30,8 +34,10 @@ const persist = () => { try { localStorage.setItem(KEY, JSON.stringify(db)); } c
 export const getSettings = () => db.settings;
 export const saveSettings = settings => { db.settings = settings; persist(); };
 export const allDays = () => db.days;
-export const getDay = key => db.days[key] || { mode: 'split', am: {}, pm: {}, log: '' }; // blank day if none saved
+export const getDay = key => db.days[key] || { mode: 'split', am: {}, pm: {}, tasks: '', challenges: '', solutions: '' }; // blank day if none saved
 export const saveDay = (key, day) => { db.days[key] = day; persist(); };
+export const hasDay = key => key in db.days;
+export const deleteDay = key => { delete db.days[key]; persist(); };
 
 // Backup: everything as one JSON text, and the way back
 export const exportJSON = () => JSON.stringify(db, null, 1);

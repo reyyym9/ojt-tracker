@@ -17,6 +17,8 @@ button, input, textarea { font: inherit; color: inherit; }
 fieldset { margin: 0; padding: 0; border: 0; min-width: 0; }
 :focus-visible { outline: 2px solid var(--color-brand); outline-offset: 2px; }
 
+[hidden] { display: none !important; } /* the hidden attribute always wins over other display rules */
+
 .app { min-height: 100vh; min-height: 100dvh; }
 
 /* Helper: hide something visually but keep it for screen readers */
