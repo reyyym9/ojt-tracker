@@ -6,6 +6,7 @@
 .card-title { margin-bottom: var(--space-3); font-size: 1.05rem; }
 .card-header .card-title { margin-bottom: 0; }
 .card-note { margin-top: var(--space-3); font-size: .8rem; color: var(--color-muted); }
+.card-note + .form-group { margin-top: var(--space-3); }
 
 /* hero = the highlighted progress card (gradient, white text) */
 .card-hero .card-note { color: rgba(255, 255, 255, .85); }
@@ -32,6 +33,7 @@
 .field:focus { outline: 0; border-color: var(--color-brand); box-shadow: 0 0 0 3px var(--color-brand-soft); }
 textarea.field { resize: none; overflow: hidden; } /* no resize handle; autosize.js sets the height */
 .field-required { color: var(--color-danger); }
+.field-optional { font-size: .8em; font-weight: 400; }
 
 /* ---- progress ---- */
 .progress-summary { display: flex; justify-content: space-between; align-items: baseline; gap: var(--space-2); flex-wrap: wrap; }
@@ -67,6 +69,13 @@ textarea.field { resize: none; overflow: hidden; } /* no resize handle; autosize
 .segmented label { display: grid; place-items: center; min-height: 44px; padding: var(--space-2); text-align: center; font-size: .9rem; border-radius: 8px; cursor: pointer; transition: background .2s; }
 .segmented input:checked + label { color: var(--color-on-brand); background: var(--color-brand); font-weight: 600; }
 .segmented input:focus-visible + label { outline: 2px solid var(--color-brand); outline-offset: 2px; }
+
+/* ---- photo (thumbnails on Log today and Edit day) ---- */
+.photo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: var(--space-2); margin-top: var(--space-3); }
+.photo-grid:empty { display: none; }
+.photo { position: relative; margin: 0; }
+.photo img { display: block; width: 100%; aspect-ratio: 1; object-fit: cover; border: 1px solid var(--color-line); border-radius: var(--radius-sm); }
+.photo-remove { position: absolute; top: 4px; right: 4px; width: 28px; height: 28px; padding: 0; font-size: 1.1rem; line-height: 1; color: #fff; background: rgba(0, 0, 0, .65); border: 0; border-radius: 50%; cursor: pointer; }
 
 /* ---- button-row (buttons side by side) ---- */
 .button-row { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-top: var(--space-3); }

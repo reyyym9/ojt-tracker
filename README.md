@@ -17,11 +17,12 @@ Shared CSS:
 
 The menu is copied into every page.
 
-JavaScript:
+JavaScript (ES modules, in `js/`):
 
 - `util.js` - date/time/text helpers
 - `calc.js` - hours, late, overtime, progress, estimated finish, validation
 - `store.js` - saving and loading data (the offline "backend")
+- `images.js` / `photos.js` - photos in IndexedDB and the photo picker
 - `autosize.js` - text boxes grow with their text
 - `theme-init.js` / `theme.js` - light/dark theme (init script runs in <head>)
 - `pages/` - one script per page: `dashboard.js`, `log.js`, `history.js`, `edit-day.js`, `settings.js`

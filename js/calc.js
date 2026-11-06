@@ -42,12 +42,13 @@ export function finishDate(leftMin, settings) {
   return keyOf(d);
 }
 
-// The three notes every day needs for the weekly narrative report: [field name, label]
+// The daily notes used for the weekly narrative report: [field name, label, required?]
 export const NOTES = [
-  ['tasks', 'Tasks done'],
-  ['challenges', 'Challenges encountered'],
-  ['solutions', 'How I overcame these challenges'],
+  ['tasks', 'Tasks done', true],
+  ['challenges', 'Challenges encountered', false],
+  ['solutions', 'How I overcame these challenges', false],
 ];
+export const REQUIRE_PHOTO = false; // set to true to make at least one photo mandatory for every day
 
 // Returns an error message, or '' when the day is fine to save
 export function validate(day) {
@@ -60,8 +61,9 @@ export function validate(day) {
     if (toMin(slot.out) <= toMin(slot.in)) return `${name}: time out must be after time in.`;
   }
   if (!hasTimes) return 'Enter at least one time in and time out.';
-  for (const [field, label] of NOTES) {
-    if (!String(day[field] || '').trim()) return `${label} is required.`; // spaces only does not count
+  for (const [field, label, required] of NOTES) {
+    if (required && !String(day[field] || '').trim()) return `${label} is required.`; // spaces only does not count
   }
+  if (REQUIRE_PHOTO && !(day.images || []).length) return 'Add at least one photo.';
   return '';
 }

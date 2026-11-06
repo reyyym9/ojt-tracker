@@ -1,7 +1,8 @@
 // SETTINGS (settings.html): OJT details, work schedule, reminders, appearance, backup.
 // Reminders are only stored for now. Phone notifications come later with Capacitor.
 import { $, todayKey } from '../util.js';
-import { getSettings, saveSettings, exportJSON, importJSON } from '../store.js';
+import { getSettings, saveSettings, exportJSON, importJSON, usedImageIds } from '../store.js';
+import { exportImages, importImages, pruneImages } from '../images.js';
 import { getChoice, setChoice } from '../theme.js';
 
 const settings = getSettings();
@@ -44,8 +45,10 @@ document.querySelectorAll('input[name="theme"]').forEach(radio => {
 });
 
 // ---- backup ----
-field('export-btn').addEventListener('click', () => {
-  const file = new File([exportJSON()], `ojt-backup-${todayKey()}.json`, { type: 'application/json' });
+field('export-btn').addEventListener('click', async () => {
+  const data = JSON.parse(exportJSON());
+  data.images = await exportImages(); // photos are added to the backup as text
+  const file = new File([JSON.stringify(data)], `ojt-backup-${todayKey()}.json`, { type: 'application/json' });
   const link = document.createElement('a');
   link.href = URL.createObjectURL(file);
   link.download = file.name;
@@ -57,7 +60,13 @@ field('import-file').addEventListener('change', async e => {
   const file = e.target.files[0];
   if (!file) return;
   if (confirm('Replace all current data with this backup?')) {
-    try { importJSON(await file.text()); alert('Backup restored.'); location.reload(); }
+    try {
+      const text = await file.text();
+      importJSON(text);                                      // days and settings
+      await importImages(JSON.parse(text).images || []);     // photos
+      await pruneImages(usedImageIds());
+      alert('Backup restored.'); location.reload();
+    }
     catch (err) { alert('That file is not a valid OJT backup.'); }
   }
   e.target.value = ''; // lets you pick the same file again later

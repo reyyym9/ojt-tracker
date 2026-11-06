@@ -11,7 +11,7 @@ const row = ([key, day]) => {
     <a class="day-item" href="edit-day.html?date=${key}">
       <div class="day-date"><span class="day-number">${parseKey(key).getDate()}</span><span class="day-month">${monthShort(key)}</span></div>
       <div class="day-info">
-        <p class="day-weekday">${weekday(key)}${late ? ' <span class="tag tag-late">Late</span>' : ''}${overtime ? ' <span class="tag tag-over">Overtime</span>' : ''}</p>
+        <p class="day-weekday">${weekday(key)}${late ? ' <span class="tag tag-late">Late</span>' : ''}${overtime ? ' <span class="tag tag-over">Overtime</span>' : ''}${day.images.length ? ` <span class="tag">${day.images.length} photo${day.images.length > 1 ? 's' : ''}</span>` : ''}</p>
         <p class="day-note">${esc(day.tasks) || 'No notes'}</p>
       </div>
       <p class="day-hours">${fmt(dayMin(day))}</p>

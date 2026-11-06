@@ -1,7 +1,10 @@
 // LOG TODAY (log.html): fill in today's times and notes, save, show the total.
 import { $, setText, todayKey, nowHM, longDate, fmt } from '../util.js';
-import { getDay, saveDay } from '../store.js';
-import { dayMin, validate } from '../calc.js';
+import { getDay, saveDay, usedImageIds } from '../store.js';
+import { dayMin, validate, NOTES } from '../calc.js';
+import { autosizeAll } from '../autosize.js';
+import { setupPhotos } from '../photos.js';
+import { pruneImages } from '../images.js';
 
 const key = todayKey();
 const value = id => $('#' + id).value;
@@ -17,7 +20,10 @@ else {
   $('#am-in').value = saved.am.in || ''; $('#am-out').value = saved.am.out || '';
   $('#pm-in').value = saved.pm.in || ''; $('#pm-out').value = saved.pm.out || '';
 }
-$('#notes').value = saved.log || '';
+NOTES.forEach(([field]) => { $('#' + field).value = saved[field] || ''; });
+autosizeAll(); // fit the boxes to any saved text
+pruneImages(usedImageIds()).catch(() => {}); // clean up photos that were never submitted
+const photos = setupPhotos(saved.images || []);
 if (dayMin(saved) > 0) showTotal(saved);
 
 function showTotal(day) {
@@ -34,10 +40,10 @@ document.addEventListener('click', e => {
 $('.log-form').addEventListener('submit', e => {
   e.preventDefault();
   const whole = $('#mode-whole').checked;
-  const log = value('notes');
+  const notes = Object.fromEntries(NOTES.map(([field]) => [field, value(field).trim()]));
   const day = whole
-    ? { mode: 'whole', am: { in: value('day-in'), out: value('day-out') }, pm: {}, log }
-    : { mode: 'split', am: { in: value('am-in'), out: value('am-out') }, pm: { in: value('pm-in'), out: value('pm-out') }, log };
+    ? { mode: 'whole', am: { in: value('day-in'), out: value('day-out') }, pm: {}, ...notes, images: photos.getIds() }
+    : { mode: 'split', am: { in: value('am-in'), out: value('am-out') }, pm: { in: value('pm-in'), out: value('pm-out') }, ...notes, images: photos.getIds() };
 
   const error = validate(day);
   if (error) { alert(error); return; }

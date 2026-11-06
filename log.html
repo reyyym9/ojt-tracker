@@ -98,21 +98,31 @@
         </section>
       </div>
 
-      <!-- Daily notes (all required) -->
+      <!-- Daily notes (Tasks done is required, the others are optional) -->
       <section class="card">
         <h2 class="card-title">Daily notes</h2>
-        <p class="card-note">All three are required. They are used for your weekly narrative report.</p>
+        <p class="card-note">Tasks done is required. The other two are optional. These notes are used for your weekly narrative report.</p>
         <div class="form-group">
           <label class="field-label" for="tasks">Tasks done <span class="field-required" aria-hidden="true">*</span></label>
           <textarea class="field" id="tasks" rows="3" required placeholder="What did you work on today?"></textarea>
         </div>
         <div class="form-group">
-          <label class="field-label" for="challenges">Challenges encountered <span class="field-required" aria-hidden="true">*</span></label>
-          <textarea class="field" id="challenges" rows="3" required placeholder="What was difficult or went wrong?"></textarea>
+          <label class="field-label" for="challenges">Challenges encountered <span class="field-optional">(optional)</span></label>
+          <textarea class="field" id="challenges" rows="3" placeholder="What was difficult or went wrong?"></textarea>
         </div>
         <div class="form-group">
-          <label class="field-label" for="solutions">How I overcame these challenges <span class="field-required" aria-hidden="true">*</span></label>
-          <textarea class="field" id="solutions" rows="3" required placeholder="What did you do, or who helped you?"></textarea>
+          <label class="field-label" for="solutions">How I overcame these challenges <span class="field-optional">(optional)</span></label>
+          <textarea class="field" id="solutions" rows="3" placeholder="What did you do, or who helped you?"></textarea>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2 class="card-title">Photos</h2>
+        <p class="card-note">Add pictures of your work. They are used in your weekly narrative report.</p>
+        <div class="photo-grid" data-bind="photos"></div>
+        <div class="button-row">
+          <label class="btn" for="photo-input">+ Add photos</label>
+          <input type="file" id="photo-input" accept="image/*" multiple class="visually-hidden">
         </div>
       </section>
 
