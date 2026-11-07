@@ -42,28 +42,45 @@ export function finishDate(leftMin, settings) {
   return keyOf(d);
 }
 
-// The daily notes used for the weekly narrative report: [field name, label, required?]
+// The daily notes used for the weekly narrative report: [field name, label]
 export const NOTES = [
-  ['tasks', 'Tasks done', true],
-  ['challenges', 'Challenges encountered', false],
-  ['solutions', 'How I overcame these challenges', false],
+  ['tasks', 'Tasks done'],
+  ['challenges', 'Challenges encountered'],
+  ['solutions', 'How I overcame these challenges'],
 ];
-export const REQUIRE_PHOTO = false; // set to true to make at least one photo mandatory for every day
+export const REQUIRE_PHOTO = false; // set to true to also ask for at least one photo before a day counts as finished
 
-// Returns an error message, or '' when the day is fine to save
+// Returns an error message, or '' when the times can be saved.
+// A day may be saved with only a time in; the notes are checked separately by dayStatus().
 export function validate(day) {
   const slots = day.mode === 'whole' ? [['Whole day', day.am]] : [['Morning', day.am], ['Afternoon', day.pm]];
-  let hasTimes = false;
+  let hasTimeIn = false;
   for (const [name, slot] of slots) {
     if (!slot.in && !slot.out) continue;
-    hasTimes = true;
-    if (!slot.in || !slot.out) return `${name}: fill in both time in and time out.`;
-    if (toMin(slot.out) <= toMin(slot.in)) return `${name}: time out must be after time in.`;
+    if (!slot.in) return `${name}: add a time in.`;
+    hasTimeIn = true;
+    if (slot.out && toMin(slot.out) <= toMin(slot.in)) return `${name}: time out must be after time in.`;
   }
-  if (!hasTimes) return 'Enter at least one time in and time out.';
-  for (const [field, label, required] of NOTES) {
-    if (required && !String(day[field] || '').trim()) return `${label} is required.`; // spaces only does not count
-  }
-  if (REQUIRE_PHOTO && !(day.images || []).length) return 'Add at least one photo.';
-  return '';
+  return hasTimeIn ? '' : 'Enter a time in to save.';
 }
+
+// Where is this day in its life?
+//   "empty"       no time in yet
+//   "open"        timed in, but no time out yet (still working)
+//   "needs-notes" has a time out, but "Tasks done" is empty
+//   "needs-photo" only when REQUIRE_PHOTO is on and there are no photos
+//   "complete"    has a time out and Tasks done: the total hours can be shown
+export function dayStatus(day) {
+  const slots = day.mode === 'whole' ? [day.am] : [day.am, day.pm];
+  if (!slots.some(slot => slot.in)) return 'empty';
+  if (!slots.some(slot => slot.in && slot.out)) return 'open';
+  if (!String(day.tasks || '').trim()) return 'needs-notes';   // spaces only does not count
+  if (REQUIRE_PHOTO && !(day.images || []).length) return 'needs-photo';
+  return 'complete';
+}
+
+// The reminder shown after saving, or '' when nothing is missing
+export const statusMessage = status => ({
+  'needs-notes': "You've timed out. Add what you did today under Tasks done to finish this entry.",
+  'needs-photo': 'Add at least one photo to finish this entry.',
+}[status] || '');

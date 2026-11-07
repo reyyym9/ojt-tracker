@@ -17,7 +17,7 @@
 </head>
 
 <!--
-  THIS PAGE - Log today: time in/out, notes, submit. Counts as part of Home.
+  THIS PAGE - Log today: time in/out (save anytime), notes, photos. Counts as part of Home.
   Every page has the same 2 parts: the screen content and the menu.
   The menu is repeated in each file; the link for this page has aria-current="page".
   If you add or rename a menu item, update the menu in ALL the pages.
@@ -98,13 +98,13 @@
         </section>
       </div>
 
-      <!-- Daily notes (Tasks done is required, the others are optional) -->
+      <!-- Daily notes (Tasks done is needed once you time out, the others are optional) -->
       <section class="card">
         <h2 class="card-title">Daily notes</h2>
-        <p class="card-note">Tasks done is required. The other two are optional. These notes are used for your weekly narrative report.</p>
+        <p class="card-note">Tasks done is needed once you time out. The other two are optional. These notes are used for your weekly narrative report.</p>
         <div class="form-group">
           <label class="field-label" for="tasks">Tasks done <span class="field-required" aria-hidden="true">*</span></label>
-          <textarea class="field" id="tasks" rows="3" required placeholder="What did you work on today?"></textarea>
+          <textarea class="field" id="tasks" rows="3" placeholder="What did you work on today?"></textarea>
         </div>
         <div class="form-group">
           <label class="field-label" for="challenges">Challenges encountered <span class="field-optional">(optional)</span></label>
@@ -126,11 +126,11 @@
         </div>
       </section>
 
-      <button class="btn btn-primary btn-block" type="submit">Submit</button>
+      <button class="btn btn-primary btn-block" type="submit">Save</button>
 
-      <!-- Result: hidden until Submit (log.js shows it) -->
+      <!-- Result: hidden until you save (log.js shows it) -->
       <div class="card result" hidden>
-        <p class="result-label">Total hours today</p>
+        <p class="result-label" data-bind="resultLabel">Total hours today</p>
         <p class="result-value" data-bind="total"></p>
       </div>
     </form>

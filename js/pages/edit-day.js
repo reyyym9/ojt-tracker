@@ -1,7 +1,7 @@
 // EDIT DAY (edit-day.html?date=2026-11-03): change the times and note of one saved day.
 import { $, setText, longDate, weekday, fmt } from '../util.js';
 import { getDay, saveDay, hasDay, deleteDay, usedImageIds } from '../store.js';
-import { dayMin, validate, NOTES } from '../calc.js';
+import { dayMin, validate, NOTES, dayStatus, statusMessage } from '../calc.js';
 import { autosizeAll } from '../autosize.js';
 import { setupPhotos } from '../photos.js';
 import { pruneImages, deleteImages } from '../images.js';
@@ -46,6 +46,13 @@ $('form').addEventListener('submit', e => {
   const day = readForm(), error = validate(day);
   if (error) { alert(error); return; }
   saveDay(key, day);
+  $('#delete-btn').hidden = false;
+  const status = dayStatus(day), message = statusMessage(status);
+  if (message) {                      // saved, but the day is not finished: stay here so the user can add what is missing
+    alert(message);
+    if (status === 'needs-notes') $('#edit-tasks').focus();
+    return;
+  }
   location.href = 'history.html';
 });
 

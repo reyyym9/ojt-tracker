@@ -1,7 +1,7 @@
-// LOG TODAY (log.html): fill in today's times and notes, save, show the total.
+// LOG TODAY (log.html): save today's times (even just a time in), then add notes to finish the day.
 import { $, setText, todayKey, nowHM, longDate, fmt } from '../util.js';
 import { getDay, saveDay, usedImageIds } from '../store.js';
-import { dayMin, validate, NOTES } from '../calc.js';
+import { dayMin, validate, NOTES, dayStatus, statusMessage } from '../calc.js';
 import { autosizeAll } from '../autosize.js';
 import { setupPhotos } from '../photos.js';
 import { pruneImages } from '../images.js';
@@ -24,11 +24,14 @@ NOTES.forEach(([field]) => { $('#' + field).value = saved[field] || ''; });
 autosizeAll(); // fit the boxes to any saved text
 pruneImages(usedImageIds()).catch(() => {}); // clean up photos that were never submitted
 const photos = setupPhotos(saved.images || []);
-if (dayMin(saved) > 0) showTotal(saved);
+showResult(saved);
 
-function showTotal(day) {
-  setText('total', fmt(dayMin(day)));
-  $('.result').hidden = false;
+// The card under the Save button depends on how far along the day is
+function showResult(day) {
+  const status = dayStatus(day);
+  $('.result').hidden = !(status === 'complete' || status === 'open'); // no total until Tasks done is filled in
+  if (status === 'complete') { setText('resultLabel', 'Total hours today'); setText('total', fmt(dayMin(day))); }
+  if (status === 'open') { setText('resultLabel', "Saved. You're timed in."); setText('total', 'In progress'); }
 }
 
 // "Use current time" buttons carry data-now="am-in" (the id of the input to fill)
@@ -47,7 +50,13 @@ $('.log-form').addEventListener('submit', e => {
 
   const error = validate(day);
   if (error) { alert(error); return; }
-  saveDay(key, day);
-  showTotal(day);
-  $('.result').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  saveDay(key, day);                       // times are always saved, even without notes
+  showResult(day);
+  const status = dayStatus(day), message = statusMessage(status);
+  if (message) {                           // timed out but something is missing: remind the user
+    alert(message);
+    if (status === 'needs-notes') $('#tasks').focus();
+  } else if (!$('.result').hidden) {
+    $('.result').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
 });
