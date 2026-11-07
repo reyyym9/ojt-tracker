@@ -16,17 +16,22 @@ Shared CSS:
 - `css/components.css` - reusable pieces (card, btn, field, chart...)
 - `css/screens.css` - page layout, menu, floating button, responsive rules
 
-The menu is copied into every page. Open `index.html` with VS Code Live Server and use the browser's phone view (F12).
+The menu is copied into every page.
 
 JavaScript (ES modules, in `js/`):
 
 - `util.js` - date/time/text helpers
 - `calc.js` - hours, late, overtime, progress, estimated finish, validation
-- `store.js` - saving and loading data (the offline "backend")
+- `store.js` - saving and loading data
 - `images.js` / `photos.js` - photos in IndexedDB and the photo picker
-- `report.js` - builds the weekly report text (one paragraph per day)
+- `report.js` - builds the weekly report text
 - `autosize.js` - text boxes grow with their text
-- `theme-init.js` / `theme.js` - light/dark theme (init script runs in <head>)
-- `pages/` - one script per page (history.js also draws the calendar): `dashboard.js`, `log.js`, `history.js`, `edit-day.js`, `settings.js`
+- `theme-init.js` / `theme.js` - light/dark theme 
+- `pages/` - one script per page: `dashboard.js`, `log.js`, `history.js`, `edit-day.js`, `settings.js`
 
-Modules need a web server: use VS Code Live Server (opening the file by double-click will not work).
+Modules need a web server.
+
+Future Plans:
+- AI-generated weekly paragraph report
+- caption-required for image input
+- Google sign-in for syncing between devices
