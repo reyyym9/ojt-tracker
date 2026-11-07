@@ -20,6 +20,9 @@
 .screen-subtitle { font-size: .9rem; color: var(--color-muted); }
 .back-link { padding: var(--space-2) var(--space-3) var(--space-2) 0; color: var(--color-brand); font-weight: 600; }
 
+/* Something pushed to the right end of the header (week badge, view toggle) */
+.screen-header-action { margin-left: auto; }
+
 /* ---- 3. Menu: sticky on every screen size (never scrolls away) ----
    Phone: fixed bar at the bottom. */
 .tabbar {

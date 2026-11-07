@@ -77,6 +77,28 @@ textarea.field { resize: none; overflow: hidden; } /* no resize handle; autosize
 .photo img { display: block; width: 100%; aspect-ratio: 1; object-fit: cover; border: 1px solid var(--color-line); border-radius: var(--radius-sm); }
 .photo-remove { position: absolute; top: 4px; right: 4px; width: 28px; height: 28px; padding: 0; font-size: 1.1rem; line-height: 1; color: #fff; background: rgba(0, 0, 0, .65); border: 0; border-radius: 50%; cursor: pointer; }
 
+/* ---- week-badge (small pill: "Week 3") ---- */
+.week-badge { display: inline-block; padding: var(--space-1) var(--space-3); font-size: .85rem; font-weight: 600; color: var(--color-brand); background: var(--color-brand-soft); border-radius: 99px; }
+.day-summary .week-badge { margin-bottom: var(--space-2); }
+
+/* ---- icon (line icons drawn with inline SVG) ---- */
+.icon { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+/* ---- calendar (History). A week = 1 label cell + 7 day cells ---- */
+.calendar { max-width: 560px; }
+.calendar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-3); }
+.calendar-title { font-size: 1.05rem; }
+.calendar-grid { display: grid; grid-template-columns: 30px repeat(7, 1fr); gap: var(--space-1); }
+.calendar-weekday, .calendar-week { display: grid; place-items: center; font-size: .7rem; color: var(--color-muted); }
+.calendar-cell { display: grid; place-items: center; aspect-ratio: 1; font-size: .9rem; border-radius: var(--radius-sm); }
+.calendar-day-complete { font-weight: 600; color: var(--color-on-brand); background: var(--color-brand); }
+.calendar-day-open { font-weight: 600; color: var(--color-brand); background: var(--color-brand-soft); box-shadow: inset 0 0 0 1.5px var(--color-brand); }
+.calendar-day-needs-notes, .calendar-day-needs-photo { font-weight: 600; color: var(--color-on-warn); background: var(--color-warn); }
+.calendar-today { outline: 2px solid var(--color-text); outline-offset: -2px; }
+@media (hover: hover) { a.calendar-day:hover { opacity: .85; } }
+.calendar-legend { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-3); font-size: .75rem; color: var(--color-muted); }
+.legend-dot { display: inline-block; width: 12px; height: 12px; margin-right: var(--space-1); vertical-align: -1px; border-radius: 4px; }
+
 /* ---- button-row (buttons side by side) ---- */
 .button-row { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-top: var(--space-3); }
 

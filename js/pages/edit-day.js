@@ -1,7 +1,7 @@
 // EDIT DAY (edit-day.html?date=2026-11-03): change the times and note of one saved day.
 import { $, setText, longDate, weekday, fmt } from '../util.js';
-import { getDay, saveDay, hasDay, deleteDay, usedImageIds } from '../store.js';
-import { dayMin, validate, NOTES, dayStatus, statusMessage } from '../calc.js';
+import { getDay, saveDay, hasDay, deleteDay, usedImageIds, allDays } from '../store.js';
+import { dayMin, validate, NOTES, dayStatus, statusMessage, firstLoggedKey, weekNumber } from '../calc.js';
 import { autosizeAll } from '../autosize.js';
 import { setupPhotos } from '../photos.js';
 import { pruneImages, deleteImages } from '../images.js';
@@ -26,6 +26,8 @@ autosizeAll(); // fit the boxes to the saved text
 pruneImages(usedImageIds()).catch(() => {}); // clean up photos that were never submitted
 const photos = setupPhotos(saved.images || []);
 setText('weekday', weekday(key));
+const first = firstLoggedKey(allDays());
+setText('week', 'Week ' + weekNumber(key, first && first < key ? first : key)); // a day before the first log would become Week 1
 setText('date', longDate(key).replace(/^\w+, /, '')); // "Tuesday, November 3, 2026" -> "November 3, 2026"
 
 // Read the form back into a day object

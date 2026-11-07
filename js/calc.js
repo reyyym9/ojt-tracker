@@ -1,5 +1,5 @@
 // CALC: all the math (hours, late, overtime, progress). No page code in here.
-import { toMin, keyOf } from './util.js';
+import { toMin, keyOf, parseKey, mondayOf } from './util.js';
 
 export const GRACE_MINUTES = 0; // minutes after the official time in that still count as on time
 const sum = list => list.reduce((a, b) => a + b, 0);
@@ -84,3 +84,20 @@ export const statusMessage = status => ({
   'needs-notes': "You've timed out. Add what you did today under Tasks done to finish this entry.",
   'needs-photo': 'Add at least one photo to finish this entry.',
 }[status] || '');
+
+// ---- logged days and OJT week numbers ----
+// A day counts as "logged" once it has a time in (or notes)
+export const isLogged = day => dayStatus(day) !== 'empty' || String(day.tasks || '').trim() !== '';
+
+// The first day the user logged = the start of Week 1 (or null before any log)
+export function firstLoggedKey(days) {
+  const keys = Object.keys(days).filter(key => isLogged(days[key])).sort();
+  return keys[0] || null;
+}
+
+// Weeks run Monday to Sunday. Week 1 is the week that contains the start day.
+// Returns 1, 2, 3...  (0 or less means the date is before the OJT started)
+export function weekNumber(key, startKey) {
+  const weeks = (parseKey(mondayOf(key)) - parseKey(mondayOf(startKey))) / (7 * 24 * 60 * 60 * 1000);
+  return Math.round(weeks) + 1; // round() absorbs daylight-saving hour changes
+}

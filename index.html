@@ -31,6 +31,7 @@
         <h1 class="screen-title">OJT Tracker</h1>
         <p class="screen-subtitle" data-bind="company">Your Company Name</p>
       </div>
+      <p class="week-badge screen-header-action" data-bind="weekBadge"></p>
     </header>
 
     <div class="stack stack-grid">
@@ -54,7 +55,7 @@
       <!-- Weekly chart. dashboard.js draws the bars; each column gets its height from --h. -->
       <article class="card">
         <div class="card-header">
-          <h2 class="card-title">This week</h2>
+          <h2 class="card-title" data-bind="weekTitle">This week</h2>
           <div class="week-nav">
             <button class="btn-icon" type="button" data-week="-1" aria-label="Previous week">&lsaquo;</button>
             <span class="week-label" data-bind="weekLabel"></span>

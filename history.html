@@ -28,10 +28,15 @@
   <section class="screen" id="history">
     <header class="screen-header">
       <h1 class="screen-title">History</h1>
+      <!-- Switches between the list and the calendar (history.js sets the icon) -->
+      <button class="btn-icon screen-header-action" type="button" id="view-toggle"></button>
     </header>
 
     <!-- history.js fills this list: one link per logged day, opening edit-day.html?date=... -->
     <div class="stack" data-bind="list"></div>
+
+    <!-- Calendar view: history.js draws it -->
+    <div class="card calendar" data-bind="calendar" hidden></div>
   </section>
 
 

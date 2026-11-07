@@ -13,6 +13,7 @@
   --color-brand-soft: #e1f1f6;   /* light tint of the brand, for active/selected backgrounds */
   --color-on-brand: #ffffff;
   --color-warn: #b45309;
+  --color-on-warn: #ffffff;
   --color-danger: #b42318;
   --hero-from: #0b6e8a;          /* gradient of the highlighted progress card */
   --hero-to: #0e87a3;
@@ -47,6 +48,7 @@
   --color-brand-soft: #123244;
   --color-on-brand: #04222c;
   --color-warn: #fbbf24;
+  --color-on-warn: #1f1300;
   --color-danger: #f87171;
   --hero-from: #0c4a63;
   --hero-to: #0b6e8a;
