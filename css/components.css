@@ -99,6 +99,22 @@ textarea.field { resize: none; overflow: hidden; } /* no resize handle; autosize
 .calendar-legend { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-3); font-size: .75rem; color: var(--color-muted); }
 .legend-dot { display: inline-block; width: 12px; height: 12px; margin-right: var(--space-1); vertical-align: -1px; border-radius: 4px; }
 
+/* ---- week-tasks (tasks done per day, on the dashboard) ---- */
+.week-tasks { display: grid; gap: var(--space-2); margin: 0; padding: 0; list-style: none; }
+.week-tasks li { display: grid; grid-template-columns: 100px minmax(0, 1fr); gap: var(--space-3); }
+.week-tasks-day { font-size: .85rem; font-weight: 600; color: var(--color-brand); }
+.week-tasks-text { white-space: pre-line; overflow-wrap: anywhere; }
+.card-wide { grid-column: 1 / -1; }
+.card > .btn-block { margin-top: var(--space-3); }
+.btn:disabled { opacity: .5; cursor: not-allowed; }
+
+/* ---- report (weekly report page) ---- */
+.report-paragraph { margin-bottom: var(--space-3); overflow-wrap: anywhere; }
+.report-photos { margin-top: var(--space-3); display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: var(--space-3); }
+.report-photo { margin: 0; }
+.report-photo img { display: block; width: 100%; aspect-ratio: 1; object-fit: cover; border: 1px solid var(--color-line); border-radius: var(--radius-sm); }
+.report-photo figcaption { margin-top: var(--space-1); font-size: .8rem; color: var(--color-muted); }
+
 /* ---- button-row (buttons side by side) ---- */
 .button-row { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-top: var(--space-3); }
 

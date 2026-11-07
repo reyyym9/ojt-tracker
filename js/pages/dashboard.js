@@ -1,7 +1,9 @@
 // DASHBOARD (index.html): progress numbers + weekly chart.
-import { $, setText, todayKey, mondayOf, addDays, shortDate, longDate, fmt } from '../util.js';
+import { $, setText, todayKey, mondayOf, addDays, shortDate, longDate, fmt, esc, dayLabel } from '../util.js';
 import { getSettings, allDays, getDay } from '../store.js';
 import { overall, dayMin, finishDate, firstLoggedKey, weekNumber } from '../calc.js';
+import { weekEntries } from '../report.js';
+import { getImage } from '../images.js';
 
 const settings = getSettings();
 let weekStart = mondayOf(todayKey()); // Monday of the week shown in the chart
@@ -40,7 +42,41 @@ function renderChart() {
   const n = startKey ? weekNumber(weekStart, startKey) : 0;
   setText('weekTitle', n >= 1 ? 'Week ' + n : weekStart === mondayOf(todayKey()) ? 'This week' : 'Before Week 1');
   setText('weekLabel', `${shortDate(weekStart)} - ${shortDate(addDays(weekStart, 6))}`);
+  renderWeekWork();
 }
+
+// ---- tasks, photos and the report button for the week shown in the chart ----
+let workRun = 0, workUrls = []; // workRun lets us ignore a slow photo load if the user already changed week
+const weekText = () => {
+  const n = startKey ? weekNumber(weekStart, startKey) : 0;
+  return `${n >= 1 ? `Week ${n} ` : ''}(${shortDate(weekStart)} - ${shortDate(addDays(weekStart, 6))})`;
+};
+
+async function renderWeekWork() {
+  const run = ++workRun;
+  const entries = weekEntries(weekStart, allDays());
+  const withTasks = entries.filter(e => e.day.tasks.trim()), missing = entries.filter(e => !e.day.tasks.trim());
+  const n = startKey ? weekNumber(weekStart, startKey) : 0;
+
+  setText('workTitle', n >= 1 ? `Week ${n}: tasks and photos` : 'Tasks and photos');
+  $('[data-bind="tasks"]').innerHTML = withTasks.length
+    ? `<ul class="week-tasks">${withTasks.map(e => `<li><span class="week-tasks-day">${dayLabel(e.key)}</span><span class="week-tasks-text">${esc(e.day.tasks)}</span></li>`).join('')}</ul>`
+    : '<p class="card-note">No tasks logged this week yet.</p>';
+  $('#report-btn').disabled = !withTasks.length;
+  setText('reportNote', !withTasks.length ? 'Add Tasks done to at least one day to generate a report.'
+    : missing.length ? `Left out of the report because Tasks done is empty: ${missing.map(e => dayLabel(e.key)).join(', ')}.` : '');
+
+  const records = await Promise.all(entries.flatMap(e => e.day.images).map(id => getImage(id)));
+  if (run !== workRun) return;                      // the user changed week while photos were loading
+  workUrls.forEach(url => URL.revokeObjectURL(url)); // free the old thumbnails
+  workUrls = records.filter(Boolean).map(record => URL.createObjectURL(record.blob));
+  $('[data-bind="weekPhotos"]').innerHTML = workUrls.map(url => `<figure class="photo"><img src="${url}" alt="Photo from this week"></figure>`).join('');
+}
+
+// Generate button: ask first, then open the report page for this week
+$('#report-btn').addEventListener('click', () => {
+  if (confirm(`Generate the weekly report for ${weekText()}?`)) location.href = `report.html?week=${weekStart}`;
+});
 
 // Previous / next week buttons carry data-week="-1" or "1"
 document.addEventListener('click', e => {

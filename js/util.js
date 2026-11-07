@@ -19,3 +19,4 @@ export const shortDate = key => parseKey(key).toLocaleDateString(undefined, { mo
 export const monthShort = key => parseKey(key).toLocaleDateString(undefined, { month: 'short' });
 export const weekday = key => parseKey(key).toLocaleDateString(undefined, { weekday: 'long' });
 export const esc = text => (text || '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+export const dayLabel = key => parseKey(key).toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' }); // "Mon, Nov 2"

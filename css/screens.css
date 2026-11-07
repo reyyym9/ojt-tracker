@@ -12,7 +12,7 @@
 }
 
 /* Forms and lists stay a comfortable reading width on big screens */
-.screen form, #history .stack { max-width: 560px; }
+.screen form, #history .stack, #report .stack { max-width: 560px; }
 
 /* ---- 2. Screen header ---- */
 .screen-header { display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-4); }
