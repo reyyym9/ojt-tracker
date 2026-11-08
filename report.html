@@ -17,7 +17,7 @@
 </head>
 
 <!--
-  THIS PAGE - Weekly report: one paragraph per day, copy/download, photos. Opened from the dashboard. Counts as part of Home.
+  THIS PAGE - Weekly report: one paragraph per day, copy/download, photos. Opened from the dashboard. Counts as part of the Report tab.
   Every page has the same 2 parts: the screen content and the menu.
   The menu is repeated in each file; the link for this page has aria-current="page".
   If you add or rename a menu item, update the menu in ALL the pages.
@@ -39,10 +39,12 @@
       <article class="card">
         <h2 class="card-title">Narrative</h2>
         <div data-bind="paragraphs"></div>
+        <p class="card-note" data-bind="generated" hidden></p>
         <p class="card-note" data-bind="missing" hidden></p>
         <div class="button-row">
           <button class="btn btn-primary" type="button" id="copy-btn">Copy report</button>
           <button class="btn" type="button" id="download-btn">Download .txt</button>
+          <button class="btn" type="button" id="regen-btn">Regenerate</button>
         </div>
       </article>
 
@@ -58,13 +60,17 @@
   <!-- ============ MENU: bottom bar on phones, left sidebar on tablets/desktops (always visible) ============ -->
   <nav class="tabbar" aria-label="Main menu">
     <p class="tabbar-brand">OJT Tracker</p>
-    <a class="tab" href="index.html" aria-current="page">
+    <a class="tab" href="index.html">
       <svg class="tab-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-8 9 8M5 10v10h5v-6h4v6h5V10"/></svg>
       <span class="tab-label">Home</span>
     </a>
     <a class="tab" href="history.html">
       <svg class="tab-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
       <span class="tab-label">History</span>
+    </a>
+    <a class="tab" href="reports.html" aria-current="page">
+      <svg class="tab-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h6"/></svg>
+      <span class="tab-label">Report</span>
     </a>
     <a class="tab" href="settings.html">
       <svg class="tab-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/></svg>

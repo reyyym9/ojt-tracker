@@ -1,5 +1,6 @@
 // STORE: the app's "backend". Saves everything in the browser/phone with localStorage (works offline).
 //   settings : { required, company, officialIn, hoursPerDay, daysPerWeek, remind:{in:{on,time}, out:{on,time}} }
+//   reports  : { "2026-11-02": { text, generatedAt } }  (key = Monday of the week; the saved weekly report)
 //   days     : { "2026-11-03": { mode: "split" | "whole", am:{in,out}, pm:{in,out}, tasks, challenges, solutions, images:[photoIds] } }
 //              (in "whole" mode the whole-day times are kept in `am`)
 const KEY = 'ojt-diy-v1';
@@ -9,7 +10,7 @@ const defaults = () => ({
     required: 240, company: '', officialIn: '08:00', hoursPerDay: 8, daysPerWeek: 5,
     remind: { in: { on: false, time: '07:45' }, out: { on: false, time: '17:00' } },
   },
-  days: {},
+  days: {}, reports: {},
 });
 
 // Turns saved or imported data into a complete, safe object (fills in anything missing)
@@ -24,7 +25,11 @@ function normalize(saved) {
       images: Array.isArray(d.images) ? d.images.map(String) : [], // ids of photos kept in IndexedDB (see images.js)
     };
   }
-  return { settings: { ...base, ...s, remind: { ...base.remind, ...s.remind } }, days };
+  const reports = {};
+  for (const [week, r] of Object.entries((saved && saved.reports) || {})) {
+    if (r && typeof r.text === 'string') reports[week] = { text: r.text, generatedAt: Number(r.generatedAt) || 0 };
+  }
+  return { settings: { ...base, ...s, remind: { ...base.remind, ...s.remind } }, days, reports };
 }
 
 let db = defaults();
@@ -38,6 +43,8 @@ export const allDays = () => db.days;
 export const getDay = key => db.days[key] || { mode: 'split', am: {}, pm: {}, tasks: '', challenges: '', solutions: '', images: [] }; // blank day if none saved
 export const saveDay = (key, day) => { db.days[key] = day; persist(); };
 export const usedImageIds = () => Object.values(db.days).flatMap(day => day.images); // photos that days still use
+export const getReport = week => db.reports[week] || null;          // the saved report of a week (or null)
+export const saveReport = (week, text) => { db.reports[week] = { text, generatedAt: Date.now() }; persist(); };
 export const hasDay = key => key in db.days;
 export const deleteDay = key => { delete db.days[key]; persist(); };
 

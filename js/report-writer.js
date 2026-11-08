@@ -1,8 +1,9 @@
-// REPORT: turns one week of saved days into the weekly narrative report (one paragraph per day).
+// REPORT WRITER: turns one week of saved days into the weekly narrative report (one paragraph per day).
 // The paragraphs are written by simple rules for now (works offline). To use a real AI writer
 // later, only writeParagraph() has to change: it gets one day and returns that day's paragraph.
 import { addDays, parseKey } from './util.js';
 import { dayMin, isLogged } from './calc.js';
+import { allDays, saveReport } from './store.js';
 
 // The logged days of a week (weekStart = its Monday), in date order: [{ key, day }]
 export const weekEntries = (weekStart, days) =>
@@ -52,3 +53,10 @@ export function buildReport(weekStart, days) {
   };
 }
 export const reportText = paragraphs => paragraphs.map(p => p.text).join('\n\n'); // plain text, one blank line between days
+
+// Builds the report of a week from the current logs and saves it. Returns how many paragraphs it has.
+export function generateReport(weekStart) {
+  const { paragraphs } = buildReport(weekStart, allDays());
+  saveReport(weekStart, reportText(paragraphs));
+  return paragraphs.length;
+}

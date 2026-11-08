@@ -2,8 +2,9 @@
 import { $, setText, todayKey, mondayOf, addDays, shortDate, longDate, fmt, esc, dayLabel } from '../util.js';
 import { getSettings, allDays, getDay } from '../store.js';
 import { overall, dayMin, finishDate, firstLoggedKey, weekNumber } from '../calc.js';
-import { weekEntries } from '../report.js';
+import { weekEntries, generateReport } from '../report-writer.js';
 import { getImage } from '../images.js';
+import { getReport } from '../store.js';
 
 const settings = getSettings();
 let weekStart = mondayOf(todayKey()); // Monday of the week shown in the chart
@@ -62,8 +63,10 @@ async function renderWeekWork() {
   $('[data-bind="tasks"]').innerHTML = withTasks.length
     ? `<ul class="week-tasks">${withTasks.map(e => `<li><span class="week-tasks-day">${dayLabel(e.key)}</span><span class="week-tasks-text">${esc(e.day.tasks)}</span></li>`).join('')}</ul>`
     : '<p class="card-note">No tasks logged this week yet.</p>';
-  $('#report-btn').disabled = !withTasks.length;
-  setText('reportNote', !withTasks.length ? 'Add Tasks done to at least one day to generate a report.'
+  const hasReport = !!getReport(weekStart);
+  $('#report-btn').textContent = hasReport ? 'View weekly report' : 'Generate weekly report';
+  $('#report-btn').disabled = !withTasks.length && !hasReport;
+  setText('reportNote', hasReport ? '' : !withTasks.length ? 'Add Tasks done to at least one day to generate a report.'
     : missing.length ? `Left out of the report because Tasks done is empty: ${missing.map(e => dayLabel(e.key)).join(', ')}.` : '');
 
   const records = await Promise.all(entries.flatMap(e => e.day.images).map(id => getImage(id)));
@@ -73,9 +76,13 @@ async function renderWeekWork() {
   $('[data-bind="weekPhotos"]').innerHTML = workUrls.map(url => `<figure class="photo"><img src="${url}" alt="Photo from this week"></figure>`).join('');
 }
 
-// Generate button: ask first, then open the report page for this week
+// Report button: open the saved report, or ask first and generate it
 $('#report-btn').addEventListener('click', () => {
-  if (confirm(`Generate the weekly report for ${weekText()}?`)) location.href = `report.html?week=${weekStart}`;
+  if (getReport(weekStart)) { location.href = `report.html?week=${weekStart}`; return; }
+  if (confirm(`Generate the weekly report for ${weekText()}?`)) {
+    generateReport(weekStart);
+    location.href = `report.html?week=${weekStart}`;
+  }
 });
 
 // Previous / next week buttons carry data-week="-1" or "1"

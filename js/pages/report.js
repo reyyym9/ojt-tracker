@@ -1,8 +1,8 @@
 // WEEKLY REPORT (report.html?week=2026-11-02): the generated paragraphs, copy / download, and the week's photos.
 import { $, setText, esc, todayKey, mondayOf, addDays, shortDate, dayLabel } from '../util.js';
-import { allDays } from '../store.js';
+import { allDays, getReport } from '../store.js';
 import { firstLoggedKey, weekNumber } from '../calc.js';
-import { weekEntries, buildReport, reportText } from '../report.js';
+import { weekEntries, buildReport, reportText, generateReport } from '../report-writer.js';
 import { getImage } from '../images.js';
 
 // Which week? The ?week=... part of the address (a Monday). Falls back to the current week.
@@ -13,16 +13,30 @@ const startKey = firstLoggedKey(days);
 const number = startKey ? weekNumber(weekStart, startKey) : 0;
 setText('week', `${number >= 1 ? `Week ${number} \u00b7 ` : ''}${shortDate(weekStart)} - ${shortDate(addDays(weekStart, 6))}`);
 
-// ---- the narrative ----
-const { paragraphs, missing } = buildReport(weekStart, days);
-const text = reportText(paragraphs);
+// ---- the narrative: the saved report ("Regenerate" rebuilds it from the current logs) ----
+const { paragraphs: fresh, missing } = buildReport(weekStart, days);
+if (!getReport(weekStart) && fresh.length) generateReport(weekStart); // opened without generating first: create it now
+const saved = getReport(weekStart);
+const text = saved ? saved.text : '';
+const paragraphs = text ? text.split('\n\n') : [];
 $('[data-bind="paragraphs"]').innerHTML = paragraphs.length
-  ? paragraphs.map(p => `<p class="report-paragraph">${esc(p.text)}</p>`).join('')
+  ? paragraphs.map(p => `<p class="report-paragraph">${esc(p)}</p>`).join('')
   : '<p class="card-note">No days with Tasks done this week yet.</p>';
+if (saved) {
+  const outdated = saved.text !== reportText(fresh); // the logs changed after the report was generated
+  const when = new Date(saved.generatedAt).toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' });
+  setText('generated', `Generated ${when}.${outdated ? ' Your logs changed since then. Tap Regenerate to update it.' : ''}`);
+  $('[data-bind="generated"]').classList.toggle('note-warn', outdated);
+  $('[data-bind="generated"]').hidden = false;
+}
 if (missing.length) {
   setText('missing', `Left out because Tasks done is empty: ${missing.map(dayLabel).join(', ')}.`);
   $('[data-bind="missing"]').hidden = false;
 }
+$('#regen-btn').disabled = !fresh.length;
+$('#regen-btn').addEventListener('click', () => {
+  if (confirm('Regenerate this report from your current logs? The saved version will be replaced.')) { generateReport(weekStart); location.reload(); }
+});
 $('#copy-btn').disabled = $('#download-btn').disabled = !paragraphs.length;
 
 $('#copy-btn').addEventListener('click', async () => {

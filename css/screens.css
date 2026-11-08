@@ -12,7 +12,7 @@
 }
 
 /* Forms and lists stay a comfortable reading width on big screens */
-.screen form, #history .stack, #report .stack { max-width: 560px; }
+.screen form, #history .stack, #report .stack, #reports .stack { max-width: 560px; }
 
 /* ---- 2. Screen header ---- */
 .screen-header { display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-4); }
@@ -27,7 +27,7 @@
    Phone: fixed bar at the bottom. */
 .tabbar {
   position: fixed; left: 0; right: 0; bottom: 0; z-index: 10;
-  display: grid; grid-template-columns: repeat(3, 1fr);
+  display: grid; grid-template-columns: repeat(4, 1fr);
   height: calc(var(--tabbar-height) + env(safe-area-inset-bottom, 0px));
   padding-bottom: env(safe-area-inset-bottom, 0px);
   background: var(--color-surface); border-top: 1px solid var(--color-line);

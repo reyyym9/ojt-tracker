@@ -115,6 +115,17 @@ textarea.field { resize: none; overflow: hidden; } /* no resize handle; autosize
 .report-photo img { display: block; width: 100%; aspect-ratio: 1; object-fit: cover; border: 1px solid var(--color-line); border-radius: var(--radius-sm); }
 .report-photo figcaption { margin-top: var(--space-1); font-size: .8rem; color: var(--color-muted); }
 
+/* ---- report-item (one week in the Report tab) ---- */
+.report-item { display: block; width: 100%; font: inherit; color: inherit; text-align: left; cursor: pointer; transition: border-color .2s; }
+.report-item-title { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--space-2); }
+.report-item-title b { font-size: 1.05rem; }
+.report-item-range { font-size: .85rem; color: var(--color-muted); }
+.report-item-meta { margin-top: var(--space-1); font-size: .9rem; color: var(--color-muted); }
+.report-item-flags { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-top: var(--space-2); }
+.report-item-flags .tag { margin-left: 0; }
+@media (hover: hover) { .report-item:hover { border-color: var(--color-brand); } }
+.note-warn { color: var(--color-warn); }
+
 /* ---- button-row (buttons side by side) ---- */
 .button-row { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-top: var(--space-3); }
 
