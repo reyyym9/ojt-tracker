@@ -37,16 +37,20 @@ try { db = normalize(JSON.parse(localStorage.getItem(KEY))); } catch (e) { /* fi
 
 const persist = () => { try { localStorage.setItem(KEY, JSON.stringify(db)); } catch (e) { alert('Could not save your data.'); } };
 
+// Tells sync.js when something changed on this device
+let notifySync = () => {};
+export const setSyncListener = listener => { notifySync = listener; };
+
 export const getSettings = () => db.settings;
-export const saveSettings = settings => { db.settings = settings; persist(); };
+export const saveSettings = settings => { db.settings = settings; persist(); notifySync('settings', 'me'); };
 export const allDays = () => db.days;
 export const getDay = key => db.days[key] || { mode: 'split', am: {}, pm: {}, tasks: '', challenges: '', solutions: '', images: [] }; // blank day if none saved
-export const saveDay = (key, day) => { db.days[key] = day; persist(); };
+export const saveDay = (key, day) => { db.days[key] = day; persist(); notifySync('days', key); };
 export const usedImageIds = () => Object.values(db.days).flatMap(day => day.images); // photos that days still use
 export const getReport = week => db.reports[week] || null;          // the saved report of a week (or null)
-export const saveReport = (week, text) => { db.reports[week] = { text, generatedAt: Date.now() }; persist(); };
+export const saveReport = (week, text) => { db.reports[week] = { text, generatedAt: Date.now() }; persist(); notifySync('reports', week); };
 export const hasDay = key => key in db.days;
-export const deleteDay = key => { delete db.days[key]; persist(); };
+export const deleteDay = key => { delete db.days[key]; persist(); notifySync('days', key); };
 
 // Backup: everything as one JSON text, and the way back
 export const exportJSON = () => JSON.stringify(db, null, 1);
@@ -55,4 +59,23 @@ export function importJSON(text) {
   if (!data || typeof data.days !== 'object') throw new Error('Not an OJT backup');
   db = normalize(data);
   persist();
+  notifySync('all');
 }
+
+// ---- used by sync.js ----
+export const syncKeys = () => ({ settings: ['me'], days: Object.keys(db.days), reports: Object.keys(db.reports) });
+export function syncValue(table, key) {
+  if (table === 'settings') return db.settings;
+  return (table === 'days' ? db.days[key] : db.reports[key]) || null;
+}
+export function applyRemote(table, key, value) {
+  if (table === 'settings') db.settings = normalize({ settings: value }).settings;
+  else if (table === 'days') {
+    if (value) db.days[key] = normalize({ days: { [key]: value } }).days[key];
+    else delete db.days[key];
+  } else db.reports[key] = value;
+  persist();
+}
+export function resetLocal() { db = defaults(); persist(); }
+
+import('./sync.js').then(sync => sync.startSync()).catch(() => {});

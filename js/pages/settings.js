@@ -5,6 +5,7 @@ import { getSettings, saveSettings, exportJSON, importJSON, usedImageIds } from 
 import { exportImages, importImages, pruneImages } from '../images.js';
 import { getChoice, setChoice, getColor, setColor } from '../theme.js';
 import { signIn, signOut, connectDrive, getUser, getDriveToken } from '../auth.js';
+import { syncNow } from '../sync.js';
 
 const settings = getSettings();
 const field = id => $('#' + id);
@@ -105,6 +106,7 @@ async function runAccountAction(button, work) {
   catch (e) { showError(e); }
   button.disabled = false;
   renderAccount();
+  if (await syncNow()) location.reload();
 }
 
 field('google-sign-in').addEventListener('click', e => runAccountAction(e.currentTarget, signIn));

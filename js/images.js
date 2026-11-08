@@ -1,5 +1,9 @@
 // IMAGES: photos are kept in IndexedDB (a database inside the browser/phone, works offline).
 // localStorage is too small for pictures. Each day only stores the ids of its photos.
+
+import { driveFetch, getDriveToken } from './auth.js';
+import { getDriveId } from './photo-map.js';
+
 const DB_NAME = 'ojt-diy-images', STORE = 'images';
 
 const open = () => new Promise((resolve, reject) => {
@@ -27,7 +31,34 @@ export async function saveImage(blob, name) {
   await withStore('readwrite', store => store.put({ id, name, blob, created: Date.now() }));
   return id;
 }
-export const getImage = id => withStore('readonly', store => store.get(id));
+
+export const getLocalImage = id => withStore('readonly', store => store.get(id));
+export const clearImages = () => withStore('readwrite', store => { store.clear(); });
+
+// Looks on this device first, then downloads the photo from Google Drive
+export async function getImage(id) {
+  const local = await getLocalImage(id);
+  if (local) return local;
+  const driveId = getDriveId(id);
+  if (!driveId || !getDriveToken()) return undefined;
+  try {
+    const response = await driveFetch(`https://www.googleapis.com/drive/v3/files/${encodeURIComponent(driveId)}?alt=media`);
+    if (!response.ok) return undefined;
+    const record = { id, name: 'photo', blob: await response.blob(), created: Date.now() };
+    await withStore('readwrite', store => store.put(record));
+    return record;
+  } catch (e) { return undefined; }
+}
+
+export async function uploadImage(record) {
+  const form = new FormData();
+  form.append('metadata', new Blob([JSON.stringify({ name: `${record.id}.jpg`, parents: ['appDataFolder'] })], { type: 'application/json' }));
+  form.append('file', record.blob);
+  const response = await driveFetch('https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&fields=id', { method: 'POST', body: form });
+  if (!response.ok) throw new Error(`Drive upload failed (${response.status})`);
+  return (await response.json()).id;
+}
+
 export const deleteImages = ids => withStore('readwrite', store => { ids.forEach(id => store.delete(id)); });
 
 // Removes photos that no saved day uses (for example, added but never submitted)

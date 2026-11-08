@@ -12,13 +12,17 @@ export function setupPhotos(startIds) {
   async function render() {
     urls.forEach(url => URL.revokeObjectURL(url)); // free the memory of the old thumbnails
     urls = [];
-    const records = await Promise.all(ids.map(id => getImage(id)));
-    ids = ids.filter((id, i) => records[i]);          // forget photos that no longer exist
-    grid.innerHTML = records.filter(Boolean).map(record => {
-      const url = URL.createObjectURL(record.blob);
-      urls.push(url);
-      return `<figure class="photo"><img src="${url}" alt="${esc(record.name)}">
-        <button class="photo-remove" type="button" data-photo="${record.id}" aria-label="Remove photo">&times;</button></figure>`;
+        const records = await Promise.all(ids.map(id => getImage(id)));
+    grid.innerHTML = ids.map((id, i) => {
+      const record = records[i];
+      let picture = '<span class="photo-missing">Photo not available yet</span>';
+      if (record) {
+        const url = URL.createObjectURL(record.blob);
+        urls.push(url);
+        picture = `<img src="${url}" alt="${esc(record.name)}">`;
+      }
+      return `<figure class="photo">${picture}
+        <button class="photo-remove" type="button" data-photo="${esc(id)}" aria-label="Remove photo">&times;</button></figure>`;
     }).join('');
   }
 
