@@ -1,0 +1,30 @@
+{
+  "name": "git-ojt",
+  "version": "1.0.0",
+  "description": "One HTML file per screen, plus JavaScript that saves data on the device (localStorage):",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/reyyym9/ojt-tracker.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/reyyym9/ojt-tracker/issues"
+  },
+  "homepage": "https://github.com/reyyym9/ojt-tracker#readme",
+  "dependencies": {
+    "@capacitor/android": "^8.6.0",
+    "@capacitor/core": "^8.6.0",
+    "@capgo/capacitor-social-login": "^8.7.7",
+    "@supabase/supabase-js": "^2.119.0"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^8.6.0"
+  }
+}

@@ -4,6 +4,7 @@ import { $, todayKey } from '../util.js';
 import { getSettings, saveSettings, exportJSON, importJSON, usedImageIds } from '../store.js';
 import { exportImages, importImages, pruneImages } from '../images.js';
 import { getChoice, setChoice, getColor, setColor } from '../theme.js';
+import { signIn, signOut, connectDrive, getUser, getDriveToken } from '../auth.js';
 
 const settings = getSettings();
 const field = id => $('#' + id);
@@ -76,3 +77,38 @@ field('import-file').addEventListener('change', async e => {
   }
   e.target.value = ''; // lets you pick the same file again later
 });
+
+// ---- account: Google sign-in and Drive connection ----
+const showError = e => alert(e?.message || 'Something went wrong with Google. Please try again.');
+
+async function renderAccount() {
+  const user = await getUser();
+  field('account-signed-out').hidden = !!user;
+  field('account-signed-in').hidden = !user;
+  if (!user) return;
+
+  const name = user.user_metadata?.full_name || user.email;
+  field('account-avatar').textContent = name.charAt(0).toUpperCase();
+  field('account-name').textContent = name;
+  field('account-email').textContent = user.email;
+
+  const connected = !!getDriveToken();
+  field('drive-status').textContent = connected ? 'Saving to Google Drive' : 'Drive not connected';
+  field('connect-drive').textContent = connected ? 'Connected' : 'Connect';
+  field('connect-drive').disabled = connected;
+}
+
+// Disables the button while Google is working, then redraws the card
+async function runAccountAction(button, work) {
+  button.disabled = true;
+  try { await work(); }
+  catch (e) { showError(e); }
+  button.disabled = false;
+  renderAccount();
+}
+
+field('google-sign-in').addEventListener('click', e => runAccountAction(e.currentTarget, signIn));
+field('connect-drive').addEventListener('click', e => runAccountAction(e.currentTarget, connectDrive));
+field('sign-out').addEventListener('click', e => runAccountAction(e.currentTarget, signOut));
+
+renderAccount().catch(showError);

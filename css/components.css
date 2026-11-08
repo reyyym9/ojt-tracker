@@ -181,6 +181,19 @@ textarea.field { resize: none; overflow: hidden; } /* no resize handle; autosize
 .switch input:checked + .switch-track::after { transform: translateX(18px); }
 .switch input:focus-visible + .switch-track { outline: 2px solid var(--color-brand); outline-offset: 2px; }
 
+/* ---- account (Google sign-in card in Settings) ---- */
+.account-intro { margin-bottom: var(--space-3); font-size: .9rem; color: var(--color-muted); }
+.btn-google { display: flex; align-items: center; justify-content: center; gap: var(--space-3); font-weight: 600; }
+.google-mark { flex: none; width: 20px; height: 20px; }
+.account-row { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: var(--space-3); }
+.account-row-line { margin-top: var(--space-3); padding-top: var(--space-3); border-top: 1px solid var(--color-line); }
+.account-avatar { display: grid; place-items: center; width: 44px; height: 44px; font-size: 1.1rem; font-weight: 700; color: var(--color-brand); background: var(--color-brand-soft); border-radius: 50%; }
+.account-icon { border-radius: var(--radius-sm); }
+.account-name { font-weight: 600; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.account-detail { font-size: .8rem; color: var(--color-muted); overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.account-action { padding: var(--space-2) var(--space-3); font-size: .85rem; }
+.account-action:disabled { opacity: 1; color: var(--color-brand); background: var(--color-brand-soft); border-color: transparent; }
+
 /* ---- tiny phones (under 360px): stack the time fields ---- */
 @media (max-width: 359px) {
   .session-times, .reminder { grid-template-columns: 1fr; }
