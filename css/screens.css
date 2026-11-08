@@ -75,6 +75,15 @@
 
   /* content sits in the second column, wider than on phones */
   .screen { grid-column: 2; grid-row: 1; max-width: 960px; margin: 0; padding: var(--space-5) var(--space-5) 96px; }
-  .stack-grid { grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); align-items: start; }
+  .stack-grid { grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); align-items: stretch; }
+  .stack-grid > .card-hero { display: flex; flex-direction: column; }  /* same height as the chart: the stat boxes fill the extra space */
+  .card-hero .stat-row { flex: 1; }
+  .card-hero .stat { display: flex; flex-direction: column; justify-content: center; }
   .fab { right: var(--space-5); bottom: var(--space-5); }
+
+  /* History, Reports and Settings use the full content width, like the dashboard */
+  #history .stack, #reports .stack, #settings form, .calendar { max-width: none; }
+  #settings form { grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); }
+  #settings form > .btn-primary { grid-column: 1 / -1; }
+  .calendar-cell { aspect-ratio: 16 / 9; }  /* wider cells, so the full-width calendar still fits the screen */
 }
