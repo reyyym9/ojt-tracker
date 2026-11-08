@@ -79,3 +79,5 @@ export function applyRemote(table, key, value) {
 export function resetLocal() { db = defaults(); persist(); }
 
 import('./sync.js').then(sync => sync.startSync()).catch(() => {});
+
+if ('serviceWorker' in navigator && !window.Capacitor && location.hostname !== 'localhost') navigator.serviceWorker.register('sw.js').catch(() => {});
