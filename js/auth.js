@@ -33,7 +33,7 @@ async function signInAndroid() {
 async function signInWeb() {
   const { error } = await sb.auth.signInWithOAuth({
     provider: 'google',
-    options: { redirectTo: new URL('index.html', location.href).href },
+    options: { redirectTo: new URL('settings.html', location.href).href },
   });
   if (error) throw error;
 }
