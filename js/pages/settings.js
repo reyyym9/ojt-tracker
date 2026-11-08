@@ -3,7 +3,7 @@
 import { $, todayKey } from '../util.js';
 import { getSettings, saveSettings, exportJSON, importJSON, usedImageIds } from '../store.js';
 import { exportImages, importImages, pruneImages } from '../images.js';
-import { getChoice, setChoice } from '../theme.js';
+import { getChoice, setChoice, getColor, setColor } from '../theme.js';
 
 const settings = getSettings();
 const field = id => $('#' + id);
@@ -38,10 +38,15 @@ $('form').addEventListener('submit', e => {
   setTimeout(() => { button.textContent = 'Save settings'; }, 1500);
 });
 
-// ---- appearance: applies immediately, no need to press Save ----
+// ---- appearance (mode + color): applies immediately, no need to press Save ----
 field('theme-' + getChoice()).checked = true;
 document.querySelectorAll('input[name="theme"]').forEach(radio => {
   radio.addEventListener('change', () => setChoice(radio.value));
+});
+
+field('color-' + getColor()).checked = true;
+document.querySelectorAll('input[name="color"]').forEach(radio => {
+  radio.addEventListener('change', () => setColor(radio.value));
 });
 
 // ---- backup ----

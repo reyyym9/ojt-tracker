@@ -129,6 +129,15 @@ textarea.field { resize: none; overflow: hidden; } /* no resize handle; autosize
 /* ---- button-row (buttons side by side) ---- */
 .button-row { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-top: var(--space-3); }
 
+/* ---- swatches (color theme picker in Settings; --swatch is the sample color) ---- */
+.swatches { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-2); }
+.swatches input { position: absolute; opacity: 0; }
+.swatch { display: grid; justify-items: center; gap: var(--space-1); padding: var(--space-2) 0; font-size: .75rem; border: 1px solid transparent; border-radius: var(--radius-sm); cursor: pointer; }
+.swatch-dot { width: 32px; height: 32px; background: var(--swatch); border: 2px solid var(--color-surface); border-radius: 50%; box-shadow: 0 0 0 1px var(--color-muted); }
+.swatches input:checked + .swatch { font-weight: 600; background: var(--color-brand-soft); border-color: var(--color-brand); }
+.swatches input:focus-visible + .swatch { outline: 2px solid var(--color-brand); outline-offset: 2px; }
+.field-label.spaced { margin-top: var(--space-4); }
+
 /* ---- session (a time in / time out pair) ---- */
 .session-title { margin-bottom: var(--space-3); font-size: 1.05rem; }
 .session-times { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3); }

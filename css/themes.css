@@ -1,0 +1,94 @@
+/* THEMES: extra color themes for Settings > Appearance > Color.
+   Palette: "Color Trends 2024". Teal is the default and lives in tokens.css; the others are here.
+   Each theme has a light block and a dark block, so every color works in both modes.
+   Brand colors were adjusted (darker in light mode, lighter in dark mode) so text stays readable. */
+
+/* Coral (palette #ED7950) */
+:root[data-color="coral"] {
+  --color-bg: #f7f2f0; --color-surface: #ffffff; --color-text: #301e17; --color-muted: #6d5b55; --color-line: #e7ddda;
+  --color-brand: #ba3f13; --color-brand-soft: #f7e8e3; --color-on-brand: #ffffff;
+  --hero-from: #983310; --hero-to: #ba3f13;
+  --color-warn: #2b57c4; --color-on-warn: #ffffff;
+}
+:root[data-color="coral"][data-theme="dark"] {
+  --color-bg: #17110f; --color-surface: #231b17; --color-text: #f2ebe9; --color-muted: #b1a4a0; --color-line: #3f312c;
+  --color-brand: #f08e6c; --color-brand-soft: #50342a; --color-on-brand: #1b0e09;
+  --hero-from: #481e0f; --hero-to: #7e351b;
+  --color-warn: #8db2ff; --color-on-warn: #0a1530;
+}
+
+/* Sand (palette #C9AA69) */
+:root[data-color="sand"] {
+  --color-bg: #f7f5f0; --color-surface: #ffffff; --color-text: #302817; --color-muted: #6d6555; --color-line: #e7e3da;
+  --color-brand: #7f652e; --color-brand-soft: #f0ede6; --color-on-brand: #ffffff;
+  --hero-from: #695326; --hero-to: #7f652e;
+  --color-warn: #2b57c4; --color-on-warn: #ffffff;
+}
+:root[data-color="sand"][data-theme="dark"] {
+  --color-bg: #17150f; --color-surface: #231f17; --color-text: #f2efe9; --color-muted: #b1aba0; --color-line: #3f392c;
+  --color-brand: #c9aa69; --color-brand-soft: #483e29; --color-on-brand: #1b1509;
+  --hero-from: #3c311b; --hero-to: #695730;
+  --color-warn: #8db2ff; --color-on-warn: #0a1530;
+}
+
+/* Sage (palette #BDDA9F) */
+:root[data-color="sage"] {
+  --color-bg: #f4f7f0; --color-surface: #ffffff; --color-text: #243017; --color-muted: #616d55; --color-line: #e1e7da;
+  --color-brand: #4f722c; --color-brand-soft: #eaeee6; --color-on-brand: #ffffff;
+  --hero-from: #415d24; --hero-to: #4f722c;
+}
+:root[data-color="sage"][data-theme="dark"] {
+  --color-bg: #13170f; --color-surface: #1d2317; --color-text: #edf2e9; --color-muted: #a8b1a0; --color-line: #363f2c;
+  --color-brand: #bdda9f; --color-brand-soft: #404b35; --color-on-brand: #121b09;
+  --hero-from: #2c3b1c; --hero-to: #4d6831;
+}
+
+/* Rose (palette #E73B7C) */
+:root[data-color="rose"] {
+  --color-bg: #f7f0f3; --color-surface: #ffffff; --color-text: #301721; --color-muted: #6d555e; --color-line: #e7dadf;
+  --color-brand: #c7185a; --color-brand-soft: #f8e3eb; --color-on-brand: #ffffff;
+  --hero-from: #a3144a; --hero-to: #c7185a;
+}
+:root[data-color="rose"][data-theme="dark"] {
+  --color-bg: #170f12; --color-surface: #23171c; --color-text: #f2e9ec; --color-muted: #b1a0a6; --color-line: #3f2c33;
+  --color-brand: #ef7faa; --color-brand-soft: #502e3b; --color-on-brand: #1b0910;
+  --hero-from: #461025; --hero-to: #7c1d41;
+}
+
+/* Indigo (palette #515694) */
+:root[data-color="indigo"] {
+  --color-bg: #f0f1f7; --color-surface: #ffffff; --color-text: #171930; --color-muted: #55576d; --color-line: #dadbe7;
+  --color-brand: #515694; --color-brand-soft: #eaebf2; --color-on-brand: #ffffff;
+  --hero-from: #424779; --hero-to: #515694;
+}
+:root[data-color="indigo"][data-theme="dark"] {
+  --color-bg: #0f1017; --color-surface: #171823; --color-text: #e9e9f2; --color-muted: #a0a1b1; --color-line: #2c2d3f;
+  --color-brand: #9c9fc9; --color-brand-soft: #343648; --color-on-brand: #090a1b;
+  --hero-from: #212335; --hero-to: #3b3d5e;
+}
+
+/* Cocoa (palette #5B3E35) */
+:root[data-color="cocoa"] {
+  --color-bg: #f7f2f0; --color-surface: #ffffff; --color-text: #301d17; --color-muted: #6d5b55; --color-line: #e7ddda;
+  --color-brand: #5b3e35; --color-brand-soft: #ebe8e7; --color-on-brand: #ffffff;
+  --hero-from: #4b332b; --hero-to: #5b3e35;
+  --color-warn: #2b57c4; --color-on-warn: #ffffff;
+}
+:root[data-color="cocoa"][data-theme="dark"] {
+  --color-bg: #17110f; --color-surface: #231a17; --color-text: #f2ebe9; --color-muted: #b1a4a0; --color-line: #3f302c;
+  --color-brand: #c1a095; --color-brand-soft: #463733; --color-on-brand: #1b0d09;
+  --hero-from: #352722; --hero-to: #5d443c;
+  --color-warn: #8db2ff; --color-on-warn: #0a1530;
+}
+
+/* Neutral (grays) */
+:root[data-color="neutral"] {
+  --color-bg: #f4f4f5; --color-surface: #ffffff; --color-text: #18181b; --color-muted: #52525b; --color-line: #e4e4e7;
+  --color-brand: #3f3f46; --color-brand-soft: #e4e4e7; --color-on-brand: #ffffff;
+  --hero-from: #27272a; --hero-to: #3f3f46;
+}
+:root[data-color="neutral"][data-theme="dark"] {
+  --color-bg: #121214; --color-surface: #1c1c1f; --color-text: #f4f4f5; --color-muted: #a1a1aa; --color-line: #2e2e33;
+  --color-brand: #d4d4d8; --color-brand-soft: #444448; --color-on-brand: #18181b;
+  --hero-from: #3f3f46; --hero-to: #52525b;
+}

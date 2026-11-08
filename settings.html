@@ -9,8 +9,9 @@
   <!-- Sets light/dark before the page is drawn (no white flash) -->
   <script src="js/theme-init.js"></script>
 
-  <!-- CSS is split by purpose. Order matters: tokens > base > components > screens -->
+  <!-- CSS is split by purpose. Order matters: tokens > themes > base > components > screens -->
   <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/themes.css">
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/components.css">
   <link rel="stylesheet" href="css/screens.css">
@@ -82,13 +83,26 @@
 
       <section class="card">
         <h2 class="card-title">Appearance</h2>
+        <p class="field-label">Mode</p>
         <fieldset class="segmented">
-          <legend class="visually-hidden">Color theme</legend>
+          <legend class="visually-hidden">Light or dark mode</legend>
           <input type="radio" name="theme" id="theme-system" value="system"><label for="theme-system">System</label>
           <input type="radio" name="theme" id="theme-light" value="light"><label for="theme-light">Light</label>
           <input type="radio" name="theme" id="theme-dark" value="dark"><label for="theme-dark">Dark</label>
         </fieldset>
-        <p class="card-note">Applies right away. "System" follows your phone.</p>
+        <p class="field-label spaced">Color</p>
+        <fieldset class="swatches">
+          <legend class="visually-hidden">Color theme</legend>
+          <input type="radio" name="color" id="color-teal" value="teal"><label class="swatch" for="color-teal" style="--swatch: #12B3C2"><span class="swatch-dot"></span>Teal</label>
+          <input type="radio" name="color" id="color-coral" value="coral"><label class="swatch" for="color-coral" style="--swatch: #ED7950"><span class="swatch-dot"></span>Coral</label>
+          <input type="radio" name="color" id="color-sand" value="sand"><label class="swatch" for="color-sand" style="--swatch: #C9AA69"><span class="swatch-dot"></span>Sand</label>
+          <input type="radio" name="color" id="color-sage" value="sage"><label class="swatch" for="color-sage" style="--swatch: #BDDA9F"><span class="swatch-dot"></span>Sage</label>
+          <input type="radio" name="color" id="color-rose" value="rose"><label class="swatch" for="color-rose" style="--swatch: #E73B7C"><span class="swatch-dot"></span>Rose</label>
+          <input type="radio" name="color" id="color-indigo" value="indigo"><label class="swatch" for="color-indigo" style="--swatch: #515694"><span class="swatch-dot"></span>Indigo</label>
+          <input type="radio" name="color" id="color-cocoa" value="cocoa"><label class="swatch" for="color-cocoa" style="--swatch: #5B3E35"><span class="swatch-dot"></span>Cocoa</label>
+          <input type="radio" name="color" id="color-neutral" value="neutral"><label class="swatch" for="color-neutral" style="--swatch: #71717A"><span class="swatch-dot"></span>Neutral</label>
+        </fieldset>
+        <p class="card-note">Applies right away. Every color works in light and dark mode. "System" follows your phone.</p>
       </section>
 
       <section class="card">
