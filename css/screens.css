@@ -85,5 +85,12 @@
   #history .stack, #reports .stack, #settings form, .calendar { max-width: none; }
   #settings form { grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); }
   #settings form > .btn-primary { grid-column: 1 / -1; }
+
+  /* Weekly report, Log today and Edit day also use the full width; Morning and Afternoon sit side by side */
+  #report .stack, #log form, #edit-day form { max-width: none; }
+  #log .sessions-split { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+  #edit-day form { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+  #edit-day form > * { grid-column: 1 / -1; }
+  #edit-day form > .session[data-mode-only="split"] { grid-column: auto; }
   .calendar-cell { aspect-ratio: 16 / 9; }  /* wider cells, so the full-width calendar still fits the screen */
 }

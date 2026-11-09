@@ -31,6 +31,11 @@
 .field-label { display: block; margin-bottom: var(--space-1); font-size: .85rem; font-weight: 500; color: var(--color-muted); }
 .field { width: 100%; min-height: 44px; padding: var(--space-3); background: var(--color-bg); border: 1px solid var(--color-line); border-radius: var(--radius-sm); transition: border-color .2s, box-shadow .2s; }
 .field:focus { outline: 0; border-color: var(--color-brand); box-shadow: 0 0 0 3px var(--color-brand-soft); }
+/* iPhone Safari gives time boxes a built-in minimum width that spills out of the card */
+@supports (-webkit-touch-callout: none) {
+  input[type="time"].field { display: block; min-width: 0; max-width: 100%; -webkit-appearance: none; appearance: none; text-align: left; }
+  input[type="time"].field::-webkit-date-and-time-value { min-height: 1.4em; text-align: left; }
+}
 textarea.field { resize: none; overflow: hidden; } /* no resize handle; autosize.js sets the height */
 .field-required { color: var(--color-danger); }
 .field-optional { font-size: .8em; font-weight: 400; }
@@ -141,7 +146,7 @@ textarea.field { resize: none; overflow: hidden; } /* no resize handle; autosize
 
 /* ---- session (a time in / time out pair) ---- */
 .session-title { margin-bottom: var(--space-3); font-size: 1.05rem; }
-.session-times { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3); }
+.session-times { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--space-3); }
 
 /* ---- result (total hours after submit) ---- */
 .result { text-align: center; color: var(--color-on-brand); background: var(--color-brand); border-color: var(--color-brand); }
@@ -197,5 +202,5 @@ textarea.field { resize: none; overflow: hidden; } /* no resize handle; autosize
 
 /* ---- tiny phones (under 360px): stack the time fields ---- */
 @media (max-width: 359px) {
-  .session-times, .reminder { grid-template-columns: 1fr; }
+  .session-times, .reminder { grid-template-columns: minmax(0, 1fr); }
 }
