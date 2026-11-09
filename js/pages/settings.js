@@ -4,7 +4,7 @@ import { $, todayKey } from '../util.js';
 import { getSettings, saveSettings, exportJSON, importJSON, usedImageIds } from '../store.js';
 import { exportImages, importImages, pruneImages } from '../images.js';
 import { getChoice, setChoice, getColor, setColor } from '../theme.js';
-import { signIn, signOut, connectDrive, getUser, getDriveToken } from '../auth.js';
+import { signIn, signOut, connectDrive, finishDriveConnect, getUser, ensureDriveToken } from '../auth.js';
 import { syncNow, getSyncStatus } from '../sync.js';
 
 const settings = getSettings();
@@ -93,7 +93,7 @@ async function renderAccount() {
   field('account-name').textContent = name;
   field('account-email').textContent = user.email;
 
-  const connected = !!getDriveToken();
+  const connected = !!(await ensureDriveToken());
   field('drive-status').textContent = connected ? 'Saving to Google Drive' : 'Drive not connected';
   field('connect-drive').textContent = connected ? 'Connected' : 'Connect';
   field('connect-drive').disabled = connected;
@@ -138,4 +138,4 @@ field('google-sign-in').addEventListener('click', e => runAccountAction(e.curren
 field('connect-drive').addEventListener('click', e => runAccountAction(e.currentTarget, connectDrive));
 field('sign-out').addEventListener('click', e => runAccountAction(e.currentTarget, signOut));
 
-renderAccount().catch(showError);
+finishDriveConnect().catch(showError).then(renderAccount).catch(showError).then(syncNow).then(changed => { if (changed) location.reload(); });

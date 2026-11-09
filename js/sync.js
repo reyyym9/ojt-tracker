@@ -1,6 +1,6 @@
 // SYNC: copies days, reports and settings to Supabase, and photos to Google Drive.
 // The app keeps working from the device copy. This file only moves changes in the background.
-import { sb, getUser, getDriveToken } from './auth.js';
+import { sb, getUser, ensureDriveToken } from './auth.js';
 import * as store from './store.js';
 import { getLocalImage, uploadImage, clearImages } from './images.js';
 import { getDriveId, setDriveId, clearDriveIds } from './photo-map.js';
@@ -113,7 +113,7 @@ async function push(user) {
 }
 
 async function uploadPhotos(user) {
-  if (!getDriveToken()) return;                                      // queued until Drive is connected
+  if (!(await ensureDriveToken())) return;                                      // queued until Drive is connected
   for (const id of new Set(store.usedImageIds())) {
     if (getDriveId(id)) continue;
     const record = await getLocalImage(id);

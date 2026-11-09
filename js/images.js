@@ -1,7 +1,7 @@
 // IMAGES: photos are kept in IndexedDB (a database inside the browser/phone, works offline).
 // localStorage is too small for pictures. Each day only stores the ids of its photos.
 
-import { driveFetch, getDriveToken } from './auth.js';
+import { driveFetch, ensureDriveToken } from './auth.js';
 import { getDriveId } from './photo-map.js';
 
 const DB_NAME = 'ojt-diy-images', STORE = 'images';
@@ -40,7 +40,7 @@ export async function getImage(id) {
   const local = await getLocalImage(id);
   if (local) return local;
   const driveId = getDriveId(id);
-  if (!driveId || !getDriveToken()) return undefined;
+  if (!driveId || !(await ensureDriveToken())) return undefined;
   try {
     const response = await driveFetch(`https://www.googleapis.com/drive/v3/files/${encodeURIComponent(driveId)}?alt=media`);
     if (!response.ok) return undefined;
