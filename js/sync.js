@@ -52,6 +52,7 @@ async function claimDevice(user) {
     await clearImages();
     clearDriveIds();
     save(emptyState());
+    localStorage.removeItem(STATUS_KEY);
     localStorage.setItem(OWNER_KEY, user.id);
     return true;
   }
@@ -124,6 +125,16 @@ async function uploadPhotos(user) {
   }
 }
 
+// ---- status shown in Settings ----
+const STATUS_KEY = 'ojt-sync-status';
+const readStatus = () => { try { return JSON.parse(localStorage.getItem(STATUS_KEY)) || {}; } catch (e) { return {}; } };
+const announceStatus = () => window.dispatchEvent(new Event('ojt-sync-status'));
+function setStatus(change) {
+  localStorage.setItem(STATUS_KEY, JSON.stringify({ ...readStatus(), ...change }));
+  announceStatus();
+}
+export const getSyncStatus = () => ({ ...readStatus(), syncing: !!running });
+
 // ---- running it ----
 async function run() {
   const user = await getUser();
@@ -131,13 +142,25 @@ async function run() {
   const claimed = await claimDevice(user);
   const changed = await pull();
   await push(user);
-  await uploadPhotos(user);
+  setStatus({ lastSync: Date.now(), failed: false });
+  try {
+    await uploadPhotos(user);
+    setStatus({ photosFailed: false });
+  } catch (e) {                                                      // logs are safe; photos stay queued for the next sync
+    console.warn('Photos will retry later:', e.message);
+    setStatus({ photosFailed: true });
+  }
   return claimed || changed;
 }
 
 let running = null;
 export function syncNow() {
-  if (!running) running = run().catch(e => { console.warn('Sync will retry later:', e.message); return false; }).finally(() => { running = null; });
+  if (!running) {
+    running = run()
+      .catch(e => { console.warn('Sync will retry later:', e.message); setStatus({ failed: true }); return false; })
+      .finally(() => { running = null; announceStatus(); });
+    announceStatus();
+  }
   return running;
 }
 

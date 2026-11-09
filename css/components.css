@@ -196,6 +196,7 @@ textarea.field { resize: none; overflow: hidden; } /* no resize handle; autosize
 .google-mark { flex: none; width: 20px; height: 20px; }
 .account-row { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: var(--space-3); }
 .account-row-line { margin-top: var(--space-3); padding-top: var(--space-3); border-top: 1px solid var(--color-line); }
+#sync-status { overflow: visible; text-overflow: clip; white-space: normal; }  /* longer status messages wrap instead of being cut off */
 .account-avatar { display: grid; place-items: center; width: 44px; height: 44px; font-size: 1.1rem; font-weight: 700; color: var(--color-brand); background: var(--color-brand-soft); border-radius: 50%; }
 .account-icon { border-radius: var(--radius-sm); }
 .account-name { font-weight: 600; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }

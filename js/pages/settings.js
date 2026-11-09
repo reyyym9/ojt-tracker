@@ -5,7 +5,7 @@ import { getSettings, saveSettings, exportJSON, importJSON, usedImageIds } from 
 import { exportImages, importImages, pruneImages } from '../images.js';
 import { getChoice, setChoice, getColor, setColor } from '../theme.js';
 import { signIn, signOut, connectDrive, getUser, getDriveToken } from '../auth.js';
-import { syncNow } from '../sync.js';
+import { syncNow, getSyncStatus } from '../sync.js';
 
 const settings = getSettings();
 const field = id => $('#' + id);
@@ -97,7 +97,32 @@ async function renderAccount() {
   field('drive-status').textContent = connected ? 'Saving to Google Drive' : 'Drive not connected';
   field('connect-drive').textContent = connected ? 'Connected' : 'Connect';
   field('connect-drive').disabled = connected;
+  renderSyncStatus();
 }
+
+// "just now", "2 mins ago", "3 hrs ago", "1 day ago"
+function timeAgo(time) {
+  const unit = (count, name) => `${count} ${name}${count > 1 ? 's' : ''} ago`;
+  const mins = Math.floor((Date.now() - time) / 60000);
+  if (mins < 1) return 'just now';
+  if (mins < 60) return unit(mins, 'min');
+  const hours = Math.floor(mins / 60);
+  return hours < 24 ? unit(hours, 'hr') : unit(Math.floor(hours / 24), 'day');
+}
+
+function renderSyncStatus() {
+  const status = getSyncStatus();
+  const last = status.lastSync ? `Last synced ${timeAgo(status.lastSync)}` : 'Not synced yet';
+  let text = last;
+  if (status.syncing) text = 'Syncing...';
+  else if (navigator.onLine === false) text = `Offline. ${last}`;
+  else if (status.failed) text = `Couldn't sync. Will try again. ${last}`;
+  else if (status.photosFailed) text = `${last}. Some photos are waiting to upload`;
+  field('sync-status').textContent = text;
+}
+
+['ojt-sync-status', 'online', 'offline'].forEach(name => window.addEventListener(name, renderSyncStatus));
+setInterval(renderSyncStatus, 30000); // keeps "2 mins ago" up to date
 
 // Disables the button while Google is working, then redraws the card
 async function runAccountAction(button, work) {
