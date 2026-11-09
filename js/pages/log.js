@@ -23,7 +23,7 @@ else {
 NOTES.forEach(([field]) => { $('#' + field).value = saved[field] || ''; });
 autosizeAll(); // fit the boxes to any saved text
 pruneImages(usedImageIds()).catch(() => {}); // clean up photos that were never submitted
-const photos = setupPhotos(saved.images || []);
+const photos = setupPhotos(saved.images || [], saved.captions || {});
 showResult(saved);
 
 // The card under the Save button depends on how far along the day is
@@ -44,9 +44,10 @@ $('.log-form').addEventListener('submit', e => {
   e.preventDefault();
   const whole = $('#mode-whole').checked;
   const notes = Object.fromEntries(NOTES.map(([field]) => [field, value(field).trim()]));
+  const photoData = { images: photos.getIds(), captions: photos.getCaptions() };
   const day = whole
-    ? { mode: 'whole', am: { in: value('day-in'), out: value('day-out') }, pm: {}, ...notes, images: photos.getIds() }
-    : { mode: 'split', am: { in: value('am-in'), out: value('am-out') }, pm: { in: value('pm-in'), out: value('pm-out') }, ...notes, images: photos.getIds() };
+    ? { mode: 'whole', am: { in: value('day-in'), out: value('day-out') }, pm: {}, ...notes, ...photoData }
+    : { mode: 'split', am: { in: value('am-in'), out: value('am-out') }, pm: { in: value('pm-in'), out: value('pm-out') }, ...notes, ...photoData };
 
   const error = validate(day);
   if (error) { alert(error); return; }

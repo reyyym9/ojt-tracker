@@ -78,6 +78,8 @@ textarea.field { resize: none; overflow: hidden; } /* no resize handle; autosize
 /* ---- photo (thumbnails on Log today and Edit day) ---- */
 .photo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: var(--space-2); margin-top: var(--space-3); }
 .photo-grid:empty { display: none; }
+.photo-grid-captions { grid-template-columns: repeat(auto-fill, minmax(min(140px, 100%), 1fr)); align-items: start; }
+.photo-caption { display: block; margin-top: var(--space-1); padding: var(--space-2); }
 .photo { position: relative; margin: 0; }
 .photo img { display: block; width: 100%; aspect-ratio: 1; object-fit: cover; border: 1px solid var(--color-line); border-radius: var(--radius-sm); }
 .photo-remove { position: absolute; top: 4px; right: 4px; width: 28px; height: 28px; padding: 0; font-size: 1.1rem; line-height: 1; color: #fff; background: rgba(0, 0, 0, .65); border: 0; border-radius: 50%; cursor: pointer; }
@@ -120,6 +122,7 @@ textarea.field { resize: none; overflow: hidden; } /* no resize handle; autosize
 .report-photo { margin: 0; }
 .report-photo img { display: block; width: 100%; aspect-ratio: 1; object-fit: cover; border: 1px solid var(--color-line); border-radius: var(--radius-sm); }
 .report-photo figcaption { margin-top: var(--space-1); font-size: .8rem; color: var(--color-muted); }
+.report-photo-note { display: block; margin-top: 2px; color: var(--color-text); overflow-wrap: anywhere; white-space: pre-line; }
 
 /* ---- report-item (one week in the Report tab) ---- */
 .report-item { display: block; width: 100%; font: inherit; color: inherit; text-align: left; cursor: pointer; transition: border-color .2s; }

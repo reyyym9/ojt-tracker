@@ -24,7 +24,7 @@ else {
 NOTES.forEach(([field]) => { $('#edit-' + field).value = saved[field] || ''; });
 autosizeAll(); // fit the boxes to the saved text
 pruneImages(usedImageIds()).catch(() => {}); // clean up photos that were never submitted
-const photos = setupPhotos(saved.images || []);
+const photos = setupPhotos(saved.images || [], saved.captions || {});
 setText('weekday', weekday(key));
 const first = firstLoggedKey(allDays());
 setText('week', 'Week ' + weekNumber(key, first && first < key ? first : key)); // a day before the first log would become Week 1
@@ -33,9 +33,10 @@ setText('date', longDate(key).replace(/^\w+, /, '')); // "Tuesday, November 3, 2
 // Read the form back into a day object
 function readForm() {
   const notes = Object.fromEntries(NOTES.map(([field]) => [field, value(field).trim()]));
+  const photoData = { images: photos.getIds(), captions: photos.getCaptions() };
   return whole
-    ? { mode: 'whole', am: { in: value('day-in'), out: value('day-out') }, pm: {}, ...notes, images: photos.getIds() }
-    : { mode: 'split', am: { in: value('am-in'), out: value('am-out') }, pm: { in: value('pm-in'), out: value('pm-out') }, ...notes, images: photos.getIds() };
+    ? { mode: 'whole', am: { in: value('day-in'), out: value('day-out') }, pm: {}, ...notes, ...photoData }
+    : { mode: 'split', am: { in: value('am-in'), out: value('am-out') }, pm: { in: value('pm-in'), out: value('pm-out') }, ...notes, ...photoData };
 }
 
 // Update "hours worked" while typing

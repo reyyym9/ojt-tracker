@@ -1,7 +1,7 @@
 // STORE: the app's "backend". Saves everything in the browser/phone with localStorage (works offline).
 //   settings : { required, company, officialIn, hoursPerDay, daysPerWeek, remind:{in:{on,time}, out:{on,time}} }
 //   reports  : { "2026-11-02": { text, generatedAt } }  (key = Monday of the week; the saved weekly report)
-//   days     : { "2026-11-03": { mode: "split" | "whole", am:{in,out}, pm:{in,out}, tasks, challenges, solutions, images:[photoIds] } }
+//   days     : { "2026-11-03": { mode: "split" | "whole", am:{in,out}, pm:{in,out}, tasks, challenges, solutions, images:[photoIds], captions:{ photoId: text } } }
 //              (in "whole" mode the whole-day times are kept in `am`)
 const KEY = 'ojt-diy-v1';
 
@@ -18,11 +18,13 @@ function normalize(saved) {
   const base = defaults().settings, s = (saved && saved.settings) || {};
   const days = {};
   for (const [key, d] of Object.entries((saved && saved.days) || {})) {
+    const images = Array.isArray(d.images) ? d.images.map(String) : []; // ids of photos kept in IndexedDB (see images.js)
+    const hasCaption = id => typeof d.captions?.[id] === 'string' && d.captions[id].trim();
     // Old entries had one note called `log`; it becomes the "tasks" note
     days[key] = {
       mode: d.mode === 'whole' ? 'whole' : 'split', am: { ...d.am }, pm: { ...d.pm },
       tasks: String(d.tasks ?? d.log ?? ''), challenges: String(d.challenges || ''), solutions: String(d.solutions || ''),
-      images: Array.isArray(d.images) ? d.images.map(String) : [], // ids of photos kept in IndexedDB (see images.js)
+      images, captions: Object.fromEntries(images.filter(hasCaption).map(id => [id, d.captions[id].trim()])),
     };
   }
   const reports = {};
@@ -44,7 +46,7 @@ export const setSyncListener = listener => { notifySync = listener; };
 export const getSettings = () => db.settings;
 export const saveSettings = settings => { db.settings = settings; persist(); notifySync('settings', 'me'); };
 export const allDays = () => db.days;
-export const getDay = key => db.days[key] || { mode: 'split', am: {}, pm: {}, tasks: '', challenges: '', solutions: '', images: [] }; // blank day if none saved
+export const getDay = key => db.days[key] || { mode: 'split', am: {}, pm: {}, tasks: '', challenges: '', solutions: '', images: [], captions: {} }; // blank day if none saved
 export const saveDay = (key, day) => { db.days[key] = day; persist(); notifySync('days', key); };
 export const usedImageIds = () => Object.values(db.days).flatMap(day => day.images); // photos that days still use
 export const getReport = week => db.reports[week] || null;          // the saved report of a week (or null)

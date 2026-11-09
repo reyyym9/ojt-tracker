@@ -61,14 +61,14 @@ $('#download-btn').addEventListener('click', () => saveAs(new Blob([text], { typ
 (async () => {
   const items = [];
   for (const { key, day } of weekEntries(weekStart, days)) {
-    for (const id of day.images) { const record = await getImage(id); if (record) items.push({ key, blob: record.blob }); }
+    for (const id of day.images) { const record = await getImage(id); if (record) items.push({ key, blob: record.blob, caption: day.captions?.[id] || '' }); }
   }
   if (!items.length) return;
   const urls = items.map(item => URL.createObjectURL(item.blob));
   $('[data-bind="photos"]').innerHTML = items.map((item, i) => `
     <figure class="report-photo">
-      <img src="${urls[i]}" alt="Photo from ${dayLabel(item.key)}">
-      <figcaption>${dayLabel(item.key)}</figcaption>
+      <img src="${urls[i]}" alt="${esc(item.caption) || `Photo from ${dayLabel(item.key)}`}">
+      <figcaption>${dayLabel(item.key)}${item.caption ? `<span class="report-photo-note">${esc(item.caption)}</span>` : ''}</figcaption>
       <button class="btn btn-small" type="button" data-save="${i}">Save</button>
     </figure>`).join('');
   $('[data-bind="photoCard"]').hidden = false;
