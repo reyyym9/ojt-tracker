@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0b6e8a">
+  <title>Privacy Policy - OJT Tracker</title>
+
+  <script src="js/theme-init.js"></script>
+
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/themes.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/screens.css">
+  <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
+  <style>
+    #privacy { max-width: 760px; margin-inline: auto; padding-bottom: var(--space-5); }
+    #privacy p + p, #privacy ul + p, #privacy p + ul { margin-top: var(--space-2); }
+    #privacy ul { margin-block: 0; padding-left: var(--space-4); }
+    #privacy li + li { margin-top: var(--space-1); }
+    #privacy a { color: var(--color-brand); text-decoration: underline; overflow-wrap: anywhere; }
+  </style>
+</head>
+
+<!-- THIS PAGE - Privacy policy. It is public and linked from the Google sign-in consent screen. -->
+<body>
+  <main class="screen" id="privacy">
+    <header class="screen-header">
+      <div>
+        <h1 class="screen-title">Privacy Policy</h1>
+        <p class="screen-subtitle">OJT Tracker. Last updated November 10, 2026.</p>
+      </div>
+    </header>
+
+    <div class="stack">
+      <section class="card">
+        <h2 class="card-title">About this app</h2>
+        <p>OJT Tracker helps you record your on-the-job training hours, daily notes, photos and weekly reports. You can use it without an account, or sign in with Google to sync your information across your devices.</p>
+      </section>
+
+      <section class="card">
+        <h2 class="card-title">Information the app uses</h2>
+        <ul>
+          <li><strong>Google account details:</strong> your name, email address and Google account ID, used to sign you in and show which account you are using.</li>
+          <li><strong>Your OJT records:</strong> time in and out, tasks, challenges, solutions, weekly reports, photo descriptions and settings.</li>
+          <li><strong>Photos you add:</strong> pictures you attach to your daily logs.</li>
+          <li><strong>Google Drive connection:</strong> a token that lets the app keep saving photos to your Drive without asking you again.</li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <h2 class="card-title">Where your information is stored</h2>
+        <ul>
+          <li><strong>On your device:</strong> the app keeps a copy of your records and photos in your browser or app storage.</li>
+          <li><strong>Supabase:</strong> if you sign in, your account details, OJT records, photo descriptions and photo file references are stored with Supabase, our database and sign-in provider.</li>
+          <li><strong>Your Google Drive:</strong> if you connect Drive, photos are saved in a hidden app folder in your own Drive. They count toward your Google storage and do not appear in My Drive.</li>
+          <li><strong>Google Drive token:</strong> this is encrypted before it is stored and is only used by the app's server function.</li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <h2 class="card-title">How Google data is used</h2>
+        <p>The app asks only for your basic Google profile and access to its own hidden Drive folder. It cannot see or change your other Google Drive files.</p>
+        <p>Google data is used only to sign you in and to save and load the photos you add. It is not sold, used for advertising, or shared with anyone except the service providers needed to run these features.</p>
+        <p>OJT Tracker's use and transfer of information received from Google APIs follows the <a href="https://developers.google.com/terms/api-services-user-data-policy" rel="noopener">Google API Services User Data Policy</a>, including the Limited Use requirements.</p>
+      </section>
+
+      <section class="card">
+        <h2 class="card-title">Keeping and deleting your information</h2>
+        <p>Your information is kept until you delete it or ask for it to be deleted. You can:</p>
+        <ul>
+          <li>Delete a day's log in the app. This also removes it from your other devices when they sync.</li>
+          <li>Remove the app's Google access at <a href="https://myaccount.google.com/permissions" rel="noopener">your Google Account permissions</a>.</li>
+          <li>Delete saved photos in Google Drive under Settings &gt; Manage apps &gt; OJT Tracker &gt; Options &gt; Delete hidden app data.</li>
+          <li>Ask for your account and synced records to be deleted, using the contact below.</li>
+        </ul>
+        <p>Signing out does not delete your information. A copy can remain on that device until another account signs in or you clear the app's data.</p>
+      </section>
+
+      <section class="card">
+        <h2 class="card-title">Changes and contact</h2>
+        <p>If this policy changes, the updated version will be posted on this page.</p>
+        <p>For questions or deletion requests, open an issue at <a href="https://github.com/reyyym9/ojt-tracker/issues" rel="noopener">github.com/reyyym9/ojt-tracker/issues</a>. Issues are public, so please do not include personal details there.</p>
+      </section>
+    </div>
+  </main>
+</body>
+</html>
