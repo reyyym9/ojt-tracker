@@ -87,14 +87,6 @@ Modules need a web server, so opening a file by double-click will not work.
 - **GitHub Pages:** hosts the website from the `main` branch.
 
 ## Future Plans
-- add descriptions or alt text for each image for more context
-- fix weekly report UI for laptop view
 - reminder notification alerts
-- replace favicon
-- show sync status in settings for visibility (shows last sync)
 - better AI-generated weekly narrative report exportable as Docx file
-- create a service worker script for offline access in iOS devices
-- make an installable website to use Add Home Screen for iOS devices
-- add a edge function for GDrive connection
-- publish under Audience for public access
 - release a new update
