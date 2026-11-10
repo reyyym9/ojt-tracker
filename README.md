@@ -88,5 +88,4 @@ Modules need a web server, so opening a file by double-click will not work.
 
 ## Future Plans
 - reminder notification alerts
-- better AI-generated weekly narrative report exportable as Docx file
 - release a new update

@@ -21,8 +21,11 @@
   "dependencies": {
     "@capacitor/android": "^8.6.0",
     "@capacitor/core": "^8.6.0",
+    "@capacitor/filesystem": "^8.1.5",
+    "@capacitor/share": "^8.0.3",
     "@capgo/capacitor-social-login": "^8.7.7",
-    "@supabase/supabase-js": "^2.119.0"
+    "@supabase/supabase-js": "^2.119.0",
+    "docx": "^9.15.3"
   },
   "devDependencies": {
     "@capacitor/cli": "^8.6.0"

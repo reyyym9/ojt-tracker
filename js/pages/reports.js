@@ -3,7 +3,7 @@
 import { $, fmt, todayKey, mondayOf, addDays, shortDate } from '../util.js';
 import { allDays, getReport } from '../store.js';
 import { dayMin, isLogged, firstLoggedKey, weekNumber } from '../calc.js';
-import { weekEntries, buildReport, reportText, generateReport } from '../report-writer.js';
+import { weekEntries, buildReport, generateReport, isOutdated, isBasicReport } from '../report-writer.js';
 
 const days = allDays();
 const startKey = firstLoggedKey(days);
@@ -25,7 +25,7 @@ function info(weekStart) {
     photos: sum(entries.map(e => e.day.images.length)),
     missing: built.missing.length,                       // days without Tasks done
     writable: built.paragraphs.length > 0,               // at least one day can be written
-    outdated: !!saved && saved.text !== reportText(built.paragraphs), // logs changed after the report was generated
+    outdated: !!saved && !isBasicReport(saved) && isOutdated(saved, weekStart, days), // logs changed after the academic version was saved
   };
 }
 
@@ -38,7 +38,7 @@ const row = w => `
     </div>
     <p class="report-item-meta">${plural(w.daysLogged, 'day')} logged \u00b7 ${fmt(w.minutes)} \u00b7 ${plural(w.photos, 'photo')}</p>
     <div class="report-item-flags">
-      ${w.saved ? '<span class="tag">Report ready</span>' : '<span class="tag">Not generated</span>'}
+      ${w.saved ? `<span class="tag">${isBasicReport(w.saved) ? 'Draft' : 'Academic version'}</span>` : '<span class="tag">Not generated</span>'}
       ${w.outdated ? '<span class="tag tag-over">Logs changed since</span>' : ''}
       ${w.missing ? `<span class="tag tag-late">${plural(w.missing, 'day')} without Tasks done</span>` : ''}
     </div>

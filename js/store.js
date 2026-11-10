@@ -29,7 +29,7 @@ function normalize(saved) {
   }
   const reports = {};
   for (const [week, r] of Object.entries((saved && saved.reports) || {})) {
-    if (r && typeof r.text === 'string') reports[week] = { text: r.text, generatedAt: Number(r.generatedAt) || 0 };
+    if (r && typeof r.text === 'string') reports[week] = { text: r.text, generatedAt: Number(r.generatedAt) || 0, fingerprint: String(r.fingerprint || '') };
   }
   return { settings: { ...base, ...s, remind: { ...base.remind, ...s.remind } }, days, reports };
 }
@@ -50,7 +50,7 @@ export const getDay = key => db.days[key] || { mode: 'split', am: {}, pm: {}, ta
 export const saveDay = (key, day) => { db.days[key] = day; persist(); notifySync('days', key); };
 export const usedImageIds = () => Object.values(db.days).flatMap(day => day.images); // photos that days still use
 export const getReport = week => db.reports[week] || null;          // the saved report of a week (or null)
-export const saveReport = (week, text) => { db.reports[week] = { text, generatedAt: Date.now() }; persist(); notifySync('reports', week); };
+export const saveReport = (week, text, fingerprint = '') => { db.reports[week] = { text, generatedAt: Date.now(), fingerprint }; persist(); notifySync('reports', week); };
 export const hasDay = key => key in db.days;
 export const deleteDay = key => { delete db.days[key]; persist(); notifySync('days', key); };
 

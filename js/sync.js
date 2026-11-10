@@ -34,13 +34,13 @@ function toRow(table, key, userId, stamp) {
   const value = store.syncValue(table, key);
   if (table === 'settings') return { user_id: userId, data: value, updated_at: stamp };
   if (table === 'days') return { user_id: userId, day: key, data: value || {}, deleted: !value, updated_at: stamp };
-  return value ? { user_id: userId, week: key, body: value.text, generated_at: value.generatedAt, updated_at: stamp } : null;
+  return value ? { user_id: userId, week: key, body: value.text, generated_at: value.generatedAt, fingerprint: value.fingerprint || '', updated_at: stamp } : null;
 }
 
 function fromRow(table, row) {
   if (table === 'settings') return { key: 'me', value: row.data };
   if (table === 'days') return { key: row.day, value: row.deleted ? null : row.data };
-  return { key: row.week, value: { text: row.body, generatedAt: Number(row.generated_at) } };
+  return { key: row.week, value: { text: row.body, generatedAt: Number(row.generated_at), fingerprint: row.fingerprint || '' } };
 }
 
 // ---- first sign-in on this device, or a different account ----

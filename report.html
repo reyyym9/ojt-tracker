@@ -41,15 +41,36 @@
     <div class="stack">
       <!-- report.js fills this with one paragraph per day -->
       <article class="card">
-        <h2 class="card-title">Narrative</h2>
+        <h2 class="card-title" data-bind="narrativeTitle">Narrative</h2>
         <div data-bind="paragraphs"></div>
         <p class="card-note" data-bind="generated" hidden></p>
         <p class="card-note" data-bind="missing" hidden></p>
         <div class="button-row">
           <button class="btn btn-primary" type="button" id="copy-btn">Copy report</button>
+          <button class="btn" type="button" id="docx-btn">Download Word</button>
           <button class="btn" type="button" id="download-btn">Download .txt</button>
-          <button class="btn" type="button" id="regen-btn">Regenerate</button>
+          <button class="btn" type="button" id="regen-btn">Back to draft</button>
         </div>
+      </article>
+
+      <!-- The user copies a prompt into a free AI chat, then pastes the answer back -->
+      <article class="card" data-bind="aiCard" hidden>
+        <h2 class="card-title">Write the academic version</h2>
+        <ol class="ai-steps">
+          <li>Tap <b>Copy prompt</b>, then open Claude.</li>
+          <li>Paste the prompt into a new chat and send it.</li>
+          <li>Copy Claude's answer and paste it below.</li>
+        </ol>
+        <div class="button-row">
+          <button class="btn btn-primary" type="button" id="copy-prompt-btn">Copy prompt</button>
+          <a class="btn" href="https://claude.ai/new" target="_blank" rel="noopener">Open Claude</a>
+        </div>
+        <div class="form-group ai-answer">
+          <label class="field-label" for="ai-answer">AI answer</label>
+          <textarea class="field" id="ai-answer" rows="5" placeholder="Paste the paragraphs here"></textarea>
+        </div>
+        <button class="btn btn-primary btn-block" type="button" id="save-ai-btn">Save academic version</button>
+        <p class="card-note">Your notes go to the AI app you paste them into. Leave out confidential company details.</p>
       </article>
 
       <article class="card" data-bind="photoCard" hidden>
@@ -84,6 +105,7 @@
 
 </div>
 <script src="js/vendor/supabase.js"></script>
+<script src="js/vendor/docx.js"></script>
 <script type="module" src="js/pages/report.js"></script>
 </body>
 </html>

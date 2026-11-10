@@ -1,7 +1,7 @@
-const VERSION = 'v3';                // change this on every release
+const VERSION = 'v4';                // change this on every release
 const PAGES = ['./', 'index.html', 'log.html', 'history.html', 'edit-day.html', 'reports.html', 'report.html', 'settings.html'];
 const CSS = ['tokens', 'themes', 'base', 'components', 'screens'].map(name => `css/${name}.css`);
-const JS = ['util', 'calc', 'store', 'images', 'photos', 'report-writer', 'autosize', 'theme-init', 'theme', 'config', 'auth', 'sync', 'photo-map', 'vendor/supabase',
+const JS = ['util', 'calc', 'store', 'images', 'photos', 'report-writer', 'autosize', 'theme-init', 'theme', 'config', 'auth', 'sync', 'photo-map', 'vendor/supabase', 'vendor/docx',
   'pages/dashboard', 'pages/log', 'pages/history', 'pages/edit-day', 'pages/reports', 'pages/report', 'pages/settings'].map(name => `js/${name}.js`);
 const FILES = [...PAGES, ...CSS, ...JS];
 

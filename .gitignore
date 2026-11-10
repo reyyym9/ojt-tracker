@@ -3,3 +3,4 @@ www/
 *.jks
 .idea/
 supabase/.temp/
+android/app/release/
