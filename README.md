@@ -85,7 +85,3 @@ Modules need a web server, so opening a file by double-click will not work.
 - **Supabase:** Google sign-in and the `settings`, `days`, `reports` and `photos` tables, each protected with row level security.
 - **Google Cloud:** the Google Drive API, the `drive.appdata` scope, one web OAuth client and two Android OAuth clients (debug and release SHA-1).
 - **GitHub Pages:** hosts the website from the `main` branch.
-
-## Future Plans
-- reminder notification alerts
-- release a new update

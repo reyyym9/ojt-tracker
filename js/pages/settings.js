@@ -1,11 +1,12 @@
 // SETTINGS (settings.html): OJT details, work schedule, reminders, appearance, backup.
-// Reminders are only stored for now. Phone notifications come later with Capacitor.
+// Reminders ring as phone notifications in the Android app (see reminders.js).
 import { $, todayKey } from '../util.js';
 import { getSettings, saveSettings, exportJSON, importJSON, usedImageIds } from '../store.js';
 import { exportImages, importImages, pruneImages } from '../images.js';
 import { getChoice, setChoice, getColor, setColor } from '../theme.js';
 import { signIn, signOut, connectDrive, finishDriveConnect, getUser, ensureDriveToken } from '../auth.js';
 import { syncNow, getSyncStatus } from '../sync.js';
+import { remindersSupported, applyReminders, workDaysText, exactAlarmsAllowed, openExactAlarmSetting } from '../reminders.js';
 
 const settings = getSettings();
 const field = id => $('#' + id);
@@ -24,7 +25,7 @@ field('remind-out-time').value = settings.remind.out.time;
 // ---- save button ----
 $('form').addEventListener('submit', e => {
   e.preventDefault();
-  saveSettings({
+  const chosen = {
     required: Number(field('required-hours').value),
     company: field('company-name').value.trim(),
     officialIn: field('official-time-in').value,
@@ -34,11 +35,31 @@ $('form').addEventListener('submit', e => {
       in: { on: field('remind-in-on').checked, time: field('remind-in-time').value },
       out: { on: field('remind-out-on').checked, time: field('remind-out-time').value },
     },
-  });
+  };
+  saveSettings(chosen);
   const button = $('[type="submit"]');
   button.textContent = 'Saved!';
   setTimeout(() => { button.textContent = 'Save settings'; }, 1500);
+  updateReminders(chosen);
 });
+
+// ---- reminders: phone notifications in the Android app ----
+const reminderNote = chosen => remindersSupported
+  ? `Reminders ring on this phone ${workDaysText(chosen.daysPerWeek)}, based on Days per week.`
+  : 'Reminders ring in the Android app. Sign in there and your choices here sync to it.';
+field('remind-note').textContent = reminderNote(settings);
+
+async function updateReminders(chosen) {
+  field('remind-note').textContent = reminderNote(chosen);
+  if (!remindersSupported) return;
+  try {
+    const status = await applyReminders(chosen, { ask: true });
+    if (status === 'denied') { alert('Reminders are off because notifications are blocked for OJT Tracker. Allow notifications in your phone settings, then save again.'); return; }
+    if (status !== 'on' || localStorage.getItem('ojt-asked-exact-alarms') || await exactAlarmsAllowed()) return;
+    localStorage.setItem('ojt-asked-exact-alarms', '1');
+    if (confirm('For reminders to ring on time, allow "Alarms & reminders" for OJT Tracker. Open that setting now?')) await openExactAlarmSetting();
+  } catch (error) { alert(`Could not set the reminders. ${error.message}`); }
+}
 
 // ---- appearance (mode + color): applies immediately, no need to press Save ----
 field('theme-' + getChoice()).checked = true;

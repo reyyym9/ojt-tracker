@@ -1,5 +1,11 @@
 {
   "appId": "com.reyyym9.ojttracker",
   "appName": "OJT Tracker",
-  "webDir": "www"
+  "webDir": "www",
+  "plugins": {
+    "LocalNotifications": {
+      "smallIcon": "ic_stat_ojt",
+      "iconColor": "#0B6E8A"
+    }
+  }
 }
