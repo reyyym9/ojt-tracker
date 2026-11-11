@@ -31,10 +31,7 @@ $('form').addEventListener('submit', e => {
     officialIn: field('official-time-in').value,
     hoursPerDay: Number(field('hours-per-day').value),
     daysPerWeek: Number(field('days-per-week').value),
-    remind: {
-      in: { on: field('remind-in-on').checked, time: field('remind-in-time').value },
-      out: { on: field('remind-out-on').checked, time: field('remind-out-time').value },
-    },
+    remind: readReminders(),
   };
   saveSettings(chosen);
   const button = $('[type="submit"]');
@@ -44,8 +41,22 @@ $('form').addEventListener('submit', e => {
 });
 
 // ---- reminders: phone notifications in the Android app ----
+function readReminders() {
+  return {
+    in: { on: field('remind-in-on').checked, time: field('remind-in-time').value },
+    out: { on: field('remind-out-on').checked, time: field('remind-out-time').value },
+  };
+}
+
+// Reminders save as soon as they change, like Appearance, so closing the app can't lose them
+['remind-in-on', 'remind-in-time', 'remind-out-on', 'remind-out-time'].forEach(id => field(id).addEventListener('change', () => {
+  const chosen = { ...getSettings(), remind: readReminders() };
+  saveSettings(chosen);
+  updateReminders(chosen);
+}));
+
 const reminderNote = chosen => remindersSupported
-  ? `Reminders ring on this phone ${workDaysText(chosen.daysPerWeek)}, based on Days per week.`
+  ? `Reminders save automatically and ring on this phone ${workDaysText(chosen.daysPerWeek)}, based on Days per week.`
   : 'Reminders ring in the Android app. Sign in there and your choices here sync to it.';
 field('remind-note').textContent = reminderNote(settings);
 
